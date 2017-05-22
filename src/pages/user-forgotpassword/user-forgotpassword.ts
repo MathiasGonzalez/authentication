@@ -1,3 +1,4 @@
+import { BasePage } from '../basePage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -10,17 +11,18 @@ import { UserSignup } from '../user-signup/user-signup';
   selector: 'page-user-forgotpassword',
   templateUrl: 'user-forgotpassword.html',
 })
-export class UserForgotpassword {
+export class UserForgotpassword extends BasePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    super(navCtrl, navParams);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserForgotpassword');
   }
 
-  dashboardPage(){ this.navCtrl.push(Dashboard); }
-  loginPage(){ this.navCtrl.push(UserLogin); }
-  signupPage(){ this.navCtrl.push(UserSignup); }
+  dashboardPage() { this.navCtrl.push(Dashboard); }
+  loginPage() { this.navCtrl.push(UserLogin); }
+  signupPage() { this.navCtrl.push(UserSignup); }
 
 }

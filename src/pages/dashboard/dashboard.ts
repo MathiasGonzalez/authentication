@@ -1,3 +1,4 @@
+import { BasePage } from '../basePage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -12,13 +13,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   selector: 'page-dashboard',
   templateUrl: 'dashboard.html',
 })
-export class Dashboard {
+export class Dashboard extends BasePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    super(navCtrl, navParams);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Dashboard');
+  }
+
+  ionViewCanEnter(): boolean {
+    return true;
   }
 
 }

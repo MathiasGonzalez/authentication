@@ -17,6 +17,7 @@ import { Dashboard } from '../pages/dashboard/dashboard';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { PageAuthorization } from "../services/pageAuthorization";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    PageAuthorization
   ]
 })
 export class AppModule {}

@@ -1,3 +1,4 @@
+import { BasePage } from '../basePage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -10,9 +11,10 @@ import { UserForgotpassword } from '../user-forgotpassword/user-forgotpassword';
   selector: 'page-user-login',
   templateUrl: 'user-login.html',
 })
-export class UserLogin {
+export class UserLogin extends BasePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    super(navCtrl,navParams)
   }
 
   ionViewDidLoad() {
