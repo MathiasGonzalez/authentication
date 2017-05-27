@@ -8,7 +8,8 @@ import { UserLogin } from '../pages/user-login/user-login';
 import { UserSignup } from '../pages/user-signup/user-signup';
 import { UserForgotpassword } from '../pages/user-forgotpassword/user-forgotpassword';
 import { Dashboard } from '../pages/dashboard/dashboard';
-
+import { SampleModalPage } from '../pages/sample-modal/sample-modal';
+import { DetalleItemPage } from '../pages/detalle-item/detalle-item';
 // import { UserLoginModule } from '../pages/user-login/user-login.module';
 // import { UserSignupModule } from '../pages/user-signup/user-signup.module';
 // import { UserForgotpasswordModule } from '../pages/user-forgotpassword/user-forgotpassword.module';
@@ -22,12 +23,12 @@ import { PageAuthorization } from "../services/pageAuthorization";
 @NgModule({
   declarations: [
     MyApp,
-
+    SampleModalPage,
     UserLogin,
     UserSignup,
     UserForgotpassword,
     Dashboard,
-
+    DetalleItemPage
   ],
   imports: [
     BrowserModule,
@@ -41,17 +42,25 @@ import { PageAuthorization } from "../services/pageAuthorization";
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-
+    SampleModalPage,
     UserLogin,
     UserSignup,
     UserForgotpassword,
     Dashboard,
+    DetalleItemPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     PageAuthorization
   ]
 })
-export class AppModule {}
+export class AppModule {
+
+  constructor() { 
+    
+  }
+
+
+}

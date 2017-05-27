@@ -1,6 +1,7 @@
 import { BasePage } from '../basePage';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { DetalleItemPage } from "../detalle-item/detalle-item";
 
 /**
  * Generated class for the Dashboard page.
@@ -15,7 +16,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class Dashboard extends BasePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  myInput; string;
+
+  protected showSeacrhBar = false;
+
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalController: ModalController) {
     super(navCtrl, navParams);
   }
 
@@ -26,5 +32,48 @@ export class Dashboard extends BasePage {
   ionViewCanEnter(): boolean {
     return true;
   }
+
+  mostrarSearchBar() {
+    this.showSeacrhBar = !this.showSeacrhBar;
+  }
+
+  onInput() {
+  }
+
+  onCancel() {
+
+  }
+
+  protected mostrarModalConfirmacion(item:any) {
+    let profileModal = this.modalController.create(DetalleItemPage,item);
+    profileModal.onDidDismiss(data => {
+      if (data && data.logout) {
+
+      }
+    });
+    profileModal.present();
+
+  }
+
+  protected data = [
+    {
+      valor1: "valor1",
+      valor2: "valor2",
+      tags: ["tag1", "tag2"],
+      fecha: new Date().toDateString()
+    },
+    {
+      valor1: "valor1",
+      valor2: "valor2",
+      tags: ["tag1", "tag2"],
+      fecha: new Date().toString()
+    },
+    {
+      valor1: "valor1",
+      valor2: "valor2",
+      tags: ["tag1", "tag2"],
+      fecha: new Date().toString()
+    }
+  ];
 
 }

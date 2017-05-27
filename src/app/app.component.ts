@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController, Nav } from 'ionic-angular';
+import { Platform, MenuController, Nav, ModalController } from 'ionic-angular';
 
 import { UserLogin } from '../pages/user-login/user-login';
 import { Dashboard } from '../pages/dashboard/dashboard';
+import { SampleModalPage } from '../pages/sample-modal/sample-modal';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -17,20 +18,21 @@ export class MyApp {
 
   // make HelloIonicPage the root (or first) page
   rootPage = UserLogin;
-  pages: Array<{title: string,icon:string, component: any}>;
+  pages: Array<{ title: string, icon: string, component: any }>;
 
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen
+    public splashScreen: SplashScreen,
+    public modalController: ModalController
   ) {
     this.initializeApp();
 
     // set our app's pages
     this.pages = [
-      { title: 'Dashbaord',icon:'home', component: Dashboard },
-      { title: 'Logout',icon:'lock', component: UserLogin }
+      { title: 'Dashbaord', icon: 'home', component: Dashboard },
+      { title: 'Logout', icon: 'lock', component: UserLogin }
     ];
   }
 
@@ -46,7 +48,22 @@ export class MyApp {
   openPage(page) {
     // close the menu when clicking a link from the menu
     this.menu.close();
-    // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
+    if (page.title !== "Logout") {
+      // navigate to the new page if it is not the current page
+      this.nav.setRoot(page.component);
+    } else {
+      this.mostrarModalConfirmacion();
+    }
+  }
+  mostrarModalConfirmacion() {
+    let profileModal = this.modalController.create(SampleModalPage);
+    profileModal.onDidDismiss(data => {
+      if (data.logout) {
+        this.nav.setRoot(UserLogin);
+      }
+    });
+    profileModal.present();
+
   }
 }
+
