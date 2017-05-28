@@ -42,6 +42,7 @@ export class BasePage {
     ionViewWillUnload():void{
 
     }
+    
 
     // ionViewDidLoad	void	Runs when the page has loaded. This event only happens once per page being created. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The ionViewDidLoad event is good place to put your setup code for the page.
     // ionViewWillEnter	void	Runs when the page is about to enter and become the active page.

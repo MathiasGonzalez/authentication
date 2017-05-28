@@ -18,7 +18,26 @@ import { DetalleItemPage } from '../pages/detalle-item/detalle-item';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { PageAuthorization } from "../services/pageAuthorization";
+import { Authorization } from "../services/authorization";
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuth } from "angularfire2/auth";
+
+
+// Initialize Firebase
+export const firebaseConfig = {
+    apiKey: "AIzaSyDuy5jk8x11qbqEiAGnl0vBbkqj5_mijfc",
+    authDomain: "inclever-aba25.firebaseapp.com",
+    databaseURL: "https://inclever-aba25.firebaseio.com",
+    projectId: "inclever-aba25",
+    storageBucket: "inclever-aba25.appspot.com",
+    messagingSenderId: "384291278072"
+  };
+
+
+
+
+
 
 @NgModule({
   declarations: [
@@ -34,6 +53,7 @@ import { PageAuthorization } from "../services/pageAuthorization";
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig),
     // UserLoginModule,
     // UserSignupModule,
     // UserForgotpasswordModule,
@@ -53,13 +73,14 @@ import { PageAuthorization } from "../services/pageAuthorization";
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    PageAuthorization
+    AngularFireAuth,
+    Authorization
   ]
 })
 export class AppModule {
 
-  constructor() { 
-    
+  constructor() {
+
   }
 
 
