@@ -1,4 +1,4 @@
-import { BasePage } from '../basePage';
+import { PrivatePage } from '../privatePage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { DetalleItemPage } from "../detalle-item/detalle-item";
@@ -15,7 +15,7 @@ import { MainItem } from "../../entities/mainItem";
   selector: 'page-dashboard',
   templateUrl: 'dashboard.html',
 })
-export class Dashboard extends BasePage {
+export class Dashboard extends PrivatePage {
 
   myInput; string;
 
@@ -30,9 +30,6 @@ export class Dashboard extends BasePage {
     console.log('ionViewDidLoad Dashboard');
   }
 
-  ionViewCanEnter(): boolean {
-    return true;
-  }
 
   mostrarSearchBar() {
     this.showSeacrhBar = !this.showSeacrhBar;

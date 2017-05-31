@@ -1,3 +1,4 @@
+import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler, Injector } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -18,7 +19,9 @@ import { DetalleItemPage } from '../pages/detalle-item/detalle-item';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
 import { Authorization } from "../providers/authorization";
+import { RealTimeDB } from "../providers/realTimeDB";
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from "angularfire2/auth";
@@ -50,6 +53,7 @@ export const firebaseConfig = {
     HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule
     // UserLoginModule,
     // UserSignupModule,
     // UserForgotpasswordModule,
@@ -70,7 +74,9 @@ export const firebaseConfig = {
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AngularFireAuth,
-    Authorization
+    AngularFireDatabase,
+    Authorization,
+    RealTimeDB
   ]
 })
 export class AppModule {

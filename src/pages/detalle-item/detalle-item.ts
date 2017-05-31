@@ -1,3 +1,4 @@
+import { PrivatePage } from '../privatePage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
@@ -12,9 +13,10 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
   selector: 'page-detalle-item',
   templateUrl: 'detalle-item.html',
 })
-export class DetalleItemPage {
+export class DetalleItemPage extends PrivatePage {
   protected item: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+    super(navCtrl, navParams);
     console.log(navParams.data);
     this.item = navParams.data;
   }
@@ -26,6 +28,9 @@ export class DetalleItemPage {
   }
   closeModal() {
     this.viewCtrl.dismiss({ logout: false });
+  }
+  save() {
+    this.realtimeDb.save("XXX");
   }
 
 }

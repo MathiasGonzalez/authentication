@@ -1,13 +1,16 @@
+import { RealTimeDB } from '../providers/realTimeDB';
 import { NavController, NavParams } from "ionic-angular";
 import { AppModule } from "../app/app.module";
 import { Authorization } from "../providers/authorization";
 
 export class BasePage {
-    
+
     authorization: Authorization;
+    realtimeDb: RealTimeDB;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.authorization = AppModule.injector.get(Authorization);
+        this.realtimeDb = AppModule.injector.get(RealTimeDB);
     }
 
     /**

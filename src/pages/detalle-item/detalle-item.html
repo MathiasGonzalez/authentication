@@ -38,7 +38,7 @@
       </ion-list>
     </ion-card-content>
     <ion-item>
-      <button *ngFor="let tag of item.tags" ion-button item-right>{{ tag }}</button>
+      <button *ngFor="let tag of item.tags" (click)="save()" ion-button item-right>{{ tag }}</button>
     </ion-item>
   </ion-card>
 </ion-content>
