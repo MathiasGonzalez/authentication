@@ -7,31 +7,38 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>DetalleItem</ion-title>
+    <ion-toolbar>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="closeModal()">
+        <ion-icon name="options"></ion-icon>
+      </button>
+      </ion-buttons>
+      <ion-title>I'm a subheader</ion-title>
+    </ion-toolbar>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-<ion-card  class="borde-sup-rojo">
-          <ion-item>
-            <h2>{{  item?.fecha }}</h2>
-          </ion-item>
-          <ion-card-content>
-            <ion-list>
-              <ion-item>
-                <ion-label stacked> Username</ion-label>
-                <ion-input type="text" (blur)="valor1Blured()" value="{{item?.valor1}}"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label stacked> Password</ion-label>
-                <ion-input type="password" value="{{item?.valor2}}"></ion-input>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>         
-          <ion-item >
-            <button *ngFor="let tag of item.tags" ion-button item-right >{{ tag }}</button>
-          </ion-item>
-        </ion-card>
+  <ion-card class="borde-sup-rojo">
+    <ion-item>
+      <h2>{{ item?.fecha }}</h2>
+    </ion-item>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label stacked> Username</ion-label>
+          <ion-input type="text" (blur)="valor1Blured()" value="{{item?.valor1}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked> Password</ion-label>
+          <ion-input type="password" value="{{item?.valor2}}"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+    <ion-item>
+      <button *ngFor="let tag of item.tags" ion-button item-right>{{ tag }}</button>
+    </ion-item>
+  </ion-card>
 </ion-content>
