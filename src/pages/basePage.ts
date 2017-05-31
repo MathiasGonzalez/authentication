@@ -1,16 +1,20 @@
-
 import { NavController, NavParams } from "ionic-angular";
+import { AppModule } from "../app/app.module";
+import { Authorization } from "../providers/authorization";
 
 export class BasePage {
+    
+    authorization: Authorization;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
+        this.authorization = AppModule.injector.get(Authorization);
     }
 
     /**
      * Runs when the page has loaded. This event only happens once per page being created. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The ionViewDidLoad event is good place to put your setup code for the page.
      */
     ionViewDidLoad(): void {
-        
+
     }
     /**
      * Runs when the page is about to enter and become the active page.
@@ -33,16 +37,16 @@ export class BasePage {
     /**
      * Runs before the view can leave. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can leave
      */
-    ionViewCanLeave(): boolean {    
+    ionViewCanLeave(): boolean {
         return true;
     }
     /**
      * Runs when the page is about to be destroyed and have its elements removed.
      */
-    ionViewWillUnload():void{
+    ionViewWillUnload(): void {
 
     }
-    
+
 
     // ionViewDidLoad	void	Runs when the page has loaded. This event only happens once per page being created. If a page leaves but is cached, then this event will not fire again on a subsequent viewing. The ionViewDidLoad event is good place to put your setup code for the page.
     // ionViewWillEnter	void	Runs when the page is about to enter and become the active page.

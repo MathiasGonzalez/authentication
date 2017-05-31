@@ -8,7 +8,7 @@ import { SampleModalPage } from '../pages/sample-modal/sample-modal';
 import * as firebase from 'firebase/app';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Authorization } from "../services/authorization";
+import { Authorization } from "../providers/authorization";
 
 
 @Component({
@@ -30,10 +30,10 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public modalController: ModalController,
-    protected auth: Authorization
+    protected authorization: Authorization
   ) {
     this.initializeApp();
-    auth.success.subscribe((user: firebase.User) => {
+    authorization.success.subscribe((user: firebase.User) => {
       this.currentUser = user;
       if(user){
         this.nav.setRoot(Dashboard);
@@ -69,7 +69,7 @@ export class MyApp {
     let profileModal = this.modalController.create(SampleModalPage);
     profileModal.onDidDismiss(data => {
       if (data.logout) {
-        this.auth.signOut();
+        this.authorization.signOut();
         this.nav.setRoot(UserLogin);
       }
     });

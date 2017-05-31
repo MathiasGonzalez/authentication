@@ -2,6 +2,7 @@ import { BasePage } from '../basePage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { DetalleItemPage } from "../detalle-item/detalle-item";
+import { MainItem } from "../../entities/mainItem";
 
 /**
  * Generated class for the Dashboard page.
@@ -44,8 +45,8 @@ export class Dashboard extends BasePage {
 
   }
 
-  protected mostrarModalConfirmacion(item:any) {
-    let profileModal = this.modalController.create(DetalleItemPage,item);
+  protected mostrarModalConfirmacion(item: any) {
+    let profileModal = this.modalController.create(DetalleItemPage, item);
     profileModal.onDidDismiss(data => {
       if (data && data.logout) {
 
@@ -54,6 +55,17 @@ export class Dashboard extends BasePage {
     profileModal.present();
 
   }
+
+
+  protected _mainItems: Array<MainItem>;
+  get mainItems(): Array<MainItem> {
+    return this._mainItems;
+  }
+
+  set mainItems(val: Array<MainItem>) {
+    this._mainItems = <Array<MainItem>>val;
+  }
+
 
   protected data = [
     {

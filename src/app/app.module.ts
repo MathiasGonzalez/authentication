@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, Injector } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
@@ -18,7 +18,7 @@ import { DetalleItemPage } from '../pages/detalle-item/detalle-item';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Authorization } from "../services/authorization";
+import { Authorization } from "../providers/authorization";
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from "angularfire2/auth";
@@ -26,17 +26,13 @@ import { AngularFireAuth } from "angularfire2/auth";
 
 // Initialize Firebase
 export const firebaseConfig = {
-    apiKey: "AIzaSyDuy5jk8x11qbqEiAGnl0vBbkqj5_mijfc",
-    authDomain: "inclever-aba25.firebaseapp.com",
-    databaseURL: "https://inclever-aba25.firebaseio.com",
-    projectId: "inclever-aba25",
-    storageBucket: "inclever-aba25.appspot.com",
-    messagingSenderId: "384291278072"
-  };
-
-
-
-
+  apiKey: "AIzaSyDuy5jk8x11qbqEiAGnl0vBbkqj5_mijfc",
+  authDomain: "inclever-aba25.firebaseapp.com",
+  databaseURL: "https://inclever-aba25.firebaseio.com",
+  projectId: "inclever-aba25",
+  storageBucket: "inclever-aba25.appspot.com",
+  messagingSenderId: "384291278072"
+};
 
 
 @NgModule({
@@ -79,8 +75,9 @@ export const firebaseConfig = {
 })
 export class AppModule {
 
-  constructor() {
-
+  static injector: Injector;
+  constructor(injector: Injector) {
+    AppModule.injector = injector;
   }
 
 
