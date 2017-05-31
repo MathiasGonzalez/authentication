@@ -15,12 +15,21 @@ import { Observable } from "rxjs/Observable";
 export class RealTimeDB {
 
   item: FirebaseObjectObservable<any>;
-  constructor(db: AngularFireDatabase) {
-    this.item = db.object('/item');
+  constructor(protected db: AngularFireDatabase) {
+    this.item = this.get('/item');
   }
-  save(newName: string) {
-    this.item.set({ name: newName });
+
+  get(item: string): FirebaseObjectObservable<any> {
+    return this.db.object(item);
   }
+
+  save(obj:any) {
+    this.item.set(obj).then(_=>console.log(_));
+  }
+
+  // save(newName: string) {
+  //   this.item.set({ name: newName }).then(_=>console.log(_));
+  // }
   update(newSize: string) {
     this.item.update({ size: newSize });
   }

@@ -24,6 +24,13 @@ export class Dashboard extends PrivatePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalController: ModalController) {
     super(navCtrl, navParams);
+    this.data = [];
+    <any>this.realtimeDb.get("/").subscribe(x => {
+      Reflect.ownKeys((<Object>x)).forEach(k => {
+        if (k && x[k] && x[k].id)
+          this.data.push(x[k]);        
+      });      
+    });
   }
 
   ionViewDidLoad() {
@@ -65,24 +72,27 @@ export class Dashboard extends PrivatePage {
 
 
   protected data = [
-    {
-      valor1: "valor1",
-      valor2: "valor2",
-      tags: ["tag1", "tag2"],
-      fecha: new Date().toDateString()
-    },
-    {
-      valor1: "valor1",
-      valor2: "valor2",
-      tags: ["tag1", "tag2"],
-      fecha: new Date().toString()
-    },
-    {
-      valor1: "valor1",
-      valor2: "valor2",
-      tags: ["tag1", "tag2"],
-      fecha: new Date().toString()
-    }
+    // {
+    //   id: "idX1",
+    //   valor1: "valor1",
+    //   valor2: "valor2",
+    //   tags: ["tag1", "tag2"],
+    //   fecha: "11/5/1990"
+    // },
+    // {
+    //   id: "idX2",
+    //   valor1: "valor1",
+    //   valor2: "valor2",
+    //   tags: ["tag1", "tag2"],
+    //   fecha: "11/5/1990"
+    // },
+    // {
+    //   id: "idX3",
+    //   valor1: "valor1",
+    //   valor2: "valor2",
+    //   tags: ["tag1", "tag2"],
+    //   fecha: "11/5/1990"
+    // }
   ];
 
 }

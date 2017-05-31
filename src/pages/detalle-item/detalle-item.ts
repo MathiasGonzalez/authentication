@@ -30,7 +30,9 @@ export class DetalleItemPage extends PrivatePage {
     this.viewCtrl.dismiss({ logout: false });
   }
   save() {
-    this.realtimeDb.save("XXX");
+    this.realtimeDb.get(`/${this.item.id}`).set(JSON.parse(JSON.stringify(this.item)))
+    console.log(this.item);
+    //this.realtimeDb.save(JSON.parse(JSON.stringify(this.item)));
   }
 
 }
