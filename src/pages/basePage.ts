@@ -8,6 +8,11 @@ export class BasePage {
     authorization: Authorization;
     realtimeDb: RealTimeDB;
 
+    get isWeb(): boolean {
+        return AppModule.isWeb;
+    }
+    
+
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.authorization = AppModule.injector.get(Authorization);
         this.realtimeDb = AppModule.injector.get(RealTimeDB);

@@ -7,7 +7,7 @@ export class PrivatePage extends BasePage {
     }
 
     ionViewCanEnter(): boolean {
-        console.log("can Enter ", this.authorization && this.authorization.authenticated)
+        console.log("can Enter :", this.authorization && this.authorization.authenticated)
         return this.authorization && this.authorization.authenticated;
     }
 }

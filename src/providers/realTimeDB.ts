@@ -15,7 +15,7 @@ import { Observable } from "rxjs/Observable";
 export class RealTimeDB {
 
   item: FirebaseObjectObservable<any>;
-  constructor(protected db: AngularFireDatabase) {
+  constructor(public db: AngularFireDatabase) {
     this.item = this.get('/item');
   }
 

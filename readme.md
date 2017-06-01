@@ -22,3 +22,5 @@
 `npm install @ionic/(nombre) --save`
 
 `cordova build --release android`
+
+`npm run ionic:build --prod`   y ver index.html

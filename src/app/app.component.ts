@@ -1,3 +1,7 @@
+import { RealTimeDB } from '../providers/realTimeDB';
+import { StartPage } from '../pages/start/start';
+import { EventEmitter } from '@angular/core/core';
+import { AppModule } from './app.module';
 import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav, ModalController } from 'ionic-angular';
 
@@ -20,6 +24,8 @@ export class MyApp {
   // make HelloIonicPage the root (or first) page
   rootPage = UserLogin;
 
+
+
   pages: Array<{ title: string, icon: string, component: any }>;
 
   currentUser: firebase.User = null;
@@ -30,14 +36,18 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public modalController: ModalController,
-    protected authorization: Authorization
+    protected authorization: Authorization,
+    protected realTimeDB: RealTimeDB
   ) {
     this.initializeApp();
     authorization.success.subscribe((user: firebase.User) => {
       this.currentUser = user;
-      if(user){
+      if (user) {
         this.nav.setRoot(Dashboard);
+      } else {
+
       }
+      console.log("USER:>", this.currentUser);
     })
     // set our app's pages
     this.pages = [
@@ -53,6 +63,12 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+    //detarminar si se esta dentro de un Browser
+    if (this.platform.is("core") || this.platform.is("mobileweb")) {
+      AppModule.isWeb = true;
+    } else {
+      AppModule.isWeb = false;
+    }
   }
 
   openPage(page) {
@@ -62,6 +78,7 @@ export class MyApp {
       // navigate to the new page if it is not the current page
       this.nav.setRoot(page.component);
     } else {
+      //mostrar modal de confirmacion
       this.mostrarModalConfirmacion();
     }
   }
@@ -69,12 +86,20 @@ export class MyApp {
     let profileModal = this.modalController.create(SampleModalPage);
     profileModal.onDidDismiss(data => {
       if (data.logout) {
+        //cerrar todas las conexiones
+        this.realTimeDB.db.database.goOffline();
+        //desloguearse
         this.authorization.signOut();
+        //volver al login
         this.nav.setRoot(UserLogin);
       }
     });
     profileModal.present();
+  }
 
+  settingsSlide() {
+    let profileModal = this.modalController.create(StartPage);   
+    profileModal.present();
   }
 }
 

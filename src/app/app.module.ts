@@ -1,6 +1,13 @@
+import { DetalleItemPageModule } from '../pages/detalle-item/detalle-item.module';
+import { SampleModalPageModule } from '../pages/sample-modal/sample-modal.module';
+import { StartPageModule } from '../pages/start/start.module';
+import { UserForgotpasswordModule } from '../pages/user-forgotpassword/user-forgotpassword.module';
+import { UserSignupModule } from '../pages/user-signup/user-signup.module';
+import { UserLoginModule } from '../pages/user-login/user-login.module';
+import { DashboardModule } from '../pages/dashboard/dashboard.module';
 import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler, Injector } from '@angular/core';
+import { NgModule, ErrorHandler, Injector, EventEmitter } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
@@ -11,6 +18,8 @@ import { UserForgotpassword } from '../pages/user-forgotpassword/user-forgotpass
 import { Dashboard } from '../pages/dashboard/dashboard';
 import { SampleModalPage } from '../pages/sample-modal/sample-modal';
 import { DetalleItemPage } from '../pages/detalle-item/detalle-item';
+import { StartPage } from '../pages/start/start';
+
 // import { UserLoginModule } from '../pages/user-login/user-login.module';
 // import { UserSignupModule } from '../pages/user-signup/user-signup.module';
 // import { UserForgotpasswordModule } from '../pages/user-forgotpassword/user-forgotpassword.module';
@@ -41,23 +50,27 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    SampleModalPage,
-    UserLogin,
-    UserSignup,
-    UserForgotpassword,
-    Dashboard,
-    DetalleItemPage
+    // SampleModalPage,
+    // UserLogin,
+    // UserSignup,
+    // UserForgotpassword,
+    // Dashboard,
+    // DetalleItemPage,
+    // StartPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule
-    // UserLoginModule,
-    // UserSignupModule,
-    // UserForgotpasswordModule,
-    // DashboardModule
+    AngularFireDatabaseModule,
+    DashboardModule,
+     UserLoginModule,
+     UserSignupModule,
+     UserForgotpasswordModule,
+     StartPageModule,SampleModalPageModule,
+     DetalleItemPageModule
+     
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -67,6 +80,7 @@ export const firebaseConfig = {
     UserSignup,
     UserForgotpassword,
     Dashboard,
+    StartPage,
     DetalleItemPage
   ],
   providers: [
@@ -81,7 +95,12 @@ export const firebaseConfig = {
 })
 export class AppModule {
 
+
+
   static injector: Injector;
+
+  static isWeb: boolean;
+
   constructor(injector: Injector) {
     AppModule.injector = injector;
   }

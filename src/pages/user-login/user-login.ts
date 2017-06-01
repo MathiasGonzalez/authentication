@@ -16,6 +16,10 @@ import { Authorization } from "../../services/authorization";
 export class UserLogin extends BasePage {
 
   protected items: FirebaseListObservable<any[]>;
+ 
+  get showlogin(): boolean {
+    return !!this.authorization && this.authorization.currentUser === null;
+  }
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     super(navCtrl, navParams)
@@ -38,9 +42,9 @@ export class UserLogin extends BasePage {
   signupPage() { this.navCtrl.push(UserSignup); }
   forgotPasswordPage() { this.navCtrl.push(UserForgotpassword); }
 
-  public loginWithGoogle(){
+  public loginWithGoogle() {
     this.authorization.loginGoogle()
-      // .then(() => this.onSignInSuccess());
+    // .then(() => this.onSignInSuccess());
   }
   loginWithFacebook() {
     this.signInWithFacebook();

@@ -13,7 +13,8 @@
         <ion-icon name="close"></ion-icon>
       </button>
       </ion-buttons>
-      <ion-title>I'm a subheader</ion-title>
+      <ion-title *ngIf="isWeb">isWeb</ion-title>
+      <ion-title *ngIf="!isWeb">not isWeb</ion-title>
     </ion-toolbar>
   </ion-navbar>
 

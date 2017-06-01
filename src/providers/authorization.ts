@@ -11,6 +11,7 @@ export class Authorization {
   private authState: Observable<firebase.User>;
   public currentUser: firebase.User;
   success: EventEmitter<any> = new EventEmitter<any>();
+  
   gToken: any;
 
   constructor(public afAuth: AngularFireAuth) {

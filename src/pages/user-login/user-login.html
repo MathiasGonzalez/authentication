@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="showlogin">
   <ion-navbar hideBackButton="true">
     <ion-buttons end>
       <button ion-button icon-right color="light" (click)="dashboardPage()">SKIP<ion-icon name="ios-arrow-forward"></ion-icon></button>
@@ -18,7 +18,7 @@
 
   <div class="hrLine"><span>Or</span></div>-->
 
-  <ion-grid>
+  <ion-grid *ngIf="showlogin" >
     <ion-row>
       <ion-col col-md-3 col-0></ion-col>
       <ion-col col-md-6 col-12>

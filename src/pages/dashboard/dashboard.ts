@@ -26,18 +26,19 @@ export class Dashboard extends PrivatePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalController: ModalController) {
     super(navCtrl, navParams);
 
-    let uid = this.authorization.currentUser.uid;
-    <any>this.realtimeDb.get(`/${uid}`).subscribe(x => {
-      this.data = [];
-      Reflect.ownKeys((<Object>x)).forEach(k => {
-        if (k && x[k] && x[k].id)
-          this.data.push(x[k]);
-      });
-    });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Dashboard');
+    if (this.authorization.authenticated) {
+      let uid = this.authorization.currentUser.uid;
+      <any>this.realtimeDb.get(`/${uid}`).subscribe(x => {
+        this.data = [];
+        Reflect.ownKeys((<Object>x)).forEach(k => {
+          if (k && x[k] && x[k].id)
+            this.data.push(x[k]);
+        });
+      });
+    }
   }
 
 
