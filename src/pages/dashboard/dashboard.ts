@@ -30,14 +30,7 @@ export class Dashboard extends PrivatePage {
 
   ionViewDidLoad() {
     if (this.authorization.authenticated) {
-      let uid = this.authorization.currentUser.uid;
-      <any>this.realtimeDb.get(`/${uid}`).subscribe(x => {
-        this.data = [];
-        Reflect.ownKeys((<Object>x)).forEach(k => {
-          if (k && x[k] && x[k].id)
-            this.data.push(x[k]);
-        });
-      });
+      this.cargaInicial();
     }
   }
 
@@ -46,8 +39,44 @@ export class Dashboard extends PrivatePage {
     this.showSeacrhBar = !this.showSeacrhBar;
   }
 
-  onInput() {
+  onInput(event: any) {
+    if (this.authorization.authenticated) {
+      let uid = this.authorization.currentUser.uid;
+
+      let input = this.myInput;
+
+      this.data = [];
+
+      if (input) {
+        this.buscar(input);
+      } else {
+        this.cargaInicial();
+      }
+    }
   }
+
+  cargaInicial() {
+    let uid = this.authorization.currentUser.uid;
+    <any>this.realtimeDb.get(`/${uid}`).subscribe(x => {
+      Reflect.ownKeys((<Object>x)).forEach(k => {
+        if (k && x[k] && x[k].id)
+          this.data.push(x[k]);
+      });
+    });
+  }
+  
+  buscar(input: string) {
+    let uid = this.authorization.currentUser.uid;
+    var ref = this.realtimeDb.db.database.ref(uid);
+    ref.orderByChild("id").equalTo(input).on("child_added", (function (snapshot) {
+      this.realtimeDb.get(`/${uid}/${snapshot.key}`).subscribe(x => {
+        this.data.push(x);
+      })
+    }).bind(this));
+  }
+
+
+
 
   onCancel() {
 

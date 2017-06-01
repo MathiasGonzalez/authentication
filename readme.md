@@ -23,4 +23,6 @@
 
 `cordova build --release android`
 
+`npm install promise-polyfill --save-exact`
+
 `npm run ionic:build --prod`   y ver index.html

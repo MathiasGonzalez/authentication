@@ -65,12 +65,11 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     DashboardModule,
-     UserLoginModule,
-     UserSignupModule,
-     UserForgotpasswordModule,
-     StartPageModule,SampleModalPageModule,
-     DetalleItemPageModule
-     
+    UserLoginModule,
+    UserSignupModule,
+    UserForgotpasswordModule,
+    StartPageModule,SampleModalPageModule,
+    DetalleItemPageModule     
   ],
   bootstrap: [IonicApp],
   entryComponents: [

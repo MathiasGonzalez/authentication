@@ -16,7 +16,11 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col col-md-3 col-0></ion-col>
+      <ion-col col-md-3 col-0>
+         <ion-buttons start>
+          <button ion-button icon-only (click)="mostrarSearchBar()"><ion-icon name="search"></ion-icon></button>
+        </ion-buttons>
+      </ion-col>
       <ion-col col-md-6 col-12>
         <ion-searchbar [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
         </ion-searchbar>
@@ -34,14 +38,10 @@
           </ion-item>
           <ion-card-content>
             <ion-list>
-              <ion-item>
-                <ion-label stacked> Username</ion-label>
-                <ion-input type="text" value="{{item?.valor1}}"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label stacked> Password</ion-label>
-                <ion-input type="password" value="{{item?.valor2}}"></ion-input>
-              </ion-item>
+              <ion-item *ngFor="let item of item.fields" >
+                <ion-label stacked> {{item?.valor1}}</ion-label>
+                <ion-input type="text" value="{{item?.valor2}}"></ion-input>
+              </ion-item>              
             </ion-list>
           </ion-card-content>         
           <ion-item >
