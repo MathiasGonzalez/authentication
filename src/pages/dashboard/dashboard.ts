@@ -41,11 +41,10 @@ export class Dashboard extends PrivatePage {
 
   onInput(event: any) {
     if (this.authorization.authenticated) {
+
       let uid = this.authorization.currentUser.uid;
 
       let input = this.myInput;
-
-      this.data = [];
 
       if (input) {
         this.buscar(input);
@@ -56,16 +55,19 @@ export class Dashboard extends PrivatePage {
   }
 
   cargaInicial() {
+
     let uid = this.authorization.currentUser.uid;
     <any>this.realtimeDb.get(`/${uid}`).subscribe(x => {
+      this.data = [];
       Reflect.ownKeys((<Object>x)).forEach(k => {
         if (k && x[k] && x[k].id)
           this.data.push(x[k]);
       });
     });
   }
-  
+
   buscar(input: string) {
+    this.data = [];
     let uid = this.authorization.currentUser.uid;
     var ref = this.realtimeDb.db.database.ref(uid);
     ref.orderByChild("id").equalTo(input).on("child_added", (function (snapshot) {
