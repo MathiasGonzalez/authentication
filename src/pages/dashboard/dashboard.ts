@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { DetalleItemPage } from "../detalle-item/detalle-item";
 import { MainItem } from "../../entities/mainItem";
+import { Field } from "../../entities/field";
 
 /**
  * Generated class for the Dashboard page.
@@ -24,12 +25,14 @@ export class Dashboard extends PrivatePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalController: ModalController) {
     super(navCtrl, navParams);
-    this.data = [];
-    <any>this.realtimeDb.get("/").subscribe(x => {
+
+    let uid = this.authorization.currentUser.uid;
+    <any>this.realtimeDb.get(`/${uid}`).subscribe(x => {
+      this.data = [];
       Reflect.ownKeys((<Object>x)).forEach(k => {
         if (k && x[k] && x[k].id)
-          this.data.push(x[k]);        
-      });      
+          this.data.push(x[k]);
+      });
     });
   }
 
@@ -49,7 +52,7 @@ export class Dashboard extends PrivatePage {
 
   }
 
-  protected mostrarModalConfirmacion(item: any) {
+  protected mostrarModalConfirmacion(item: MainItem) {
     let profileModal = this.modalController.create(DetalleItemPage, item);
     profileModal.onDidDismiss(data => {
       if (data && data.logout) {
@@ -72,27 +75,33 @@ export class Dashboard extends PrivatePage {
 
 
   protected data = [
-    // {
+    // <MainItem>{
     //   id: "idX1",
-    //   valor1: "valor1",
-    //   valor2: "valor2",
+    //   fields: <Array<Field>>[{
+    //     valor1: "valor1",
+    //     valor2: "valor2"
+    //   }],
     //   tags: ["tag1", "tag2"],
     //   fecha: "11/5/1990"
     // },
-    // {
+    // <MainItem>{
     //   id: "idX2",
-    //   valor1: "valor1",
-    //   valor2: "valor2",
+    //   fields: <Array<Field>>[{
+    //     valor1: "valor1",
+    //     valor2: "valor2"
+    //   }],
     //   tags: ["tag1", "tag2"],
     //   fecha: "11/5/1990"
     // },
-    // {
+    // <MainItem>{
     //   id: "idX3",
-    //   valor1: "valor1",
-    //   valor2: "valor2",
+    //   fields: <Array<Field>>[{
+    //     valor1: "valor1",
+    //     valor2: "valor2"
+    //   }],
     //   tags: ["tag1", "tag2"],
     //   fecha: "11/5/1990"
-    // }
+    // },
   ];
 
 }
