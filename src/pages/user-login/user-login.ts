@@ -8,6 +8,7 @@ import { UserForgotpassword } from '../user-forgotpassword/user-forgotpassword';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Authorization } from "../../services/authorization";
 import { LogInIn, User, LoginClient, LogInOut } from "../../generated/proxy";
+import { AppModule } from "../../app/app.module";
 
 @IonicPage()
 @Component({
@@ -52,6 +53,7 @@ export class UserLogin extends BasePage {
     this.signInWithFacebook();
   }
 
+  //login normal
   protected login(): void {
     if (this.checkData()) {
       let input: LogInIn = new LogInIn();
@@ -69,10 +71,13 @@ export class UserLogin extends BasePage {
   }
 
   protected processlogin(output: LogInOut): void {
-    if (output.result !== "FAIL") {
+    if (output.result === "OK") {
+      AppModule.currentUser = output.user;
       this.authorization.signInWithEmailAndPassword(output.user.email, this.currentUser.password);
-    } else {
-      this.mostrarAlerta("Error", "Usuario incorrecto");
+    } else if (output.result === "NULLDATA") {
+      this.mostrarAlerta("Error", "Información incorrecta:" + output.result);
+    } else if (output.result === "FAIL") {
+      this.mostrarAlerta("Error", "Usuario incorrecto:" + output.result);
     }
   }
 

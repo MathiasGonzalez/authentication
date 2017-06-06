@@ -6,6 +6,7 @@ import { Dashboard } from '../dashboard/dashboard';
 import { UserLogin } from '../user-login/user-login';
 import { UserForgotpassword } from '../user-forgotpassword/user-forgotpassword';
 import { LoginClient, SignUpIn, SignUpOut, User } from "../../generated/proxy";
+import { AppModule } from "../../app/app.module";
 
 @IonicPage()
 @Component({
@@ -38,6 +39,7 @@ export class UserSignup extends BasePage {
     if (output.result === "YA EXISTE") {
       this.mostrarAlerta("Usuario Existente", "Ya existe un usuario con ese nombre ó email.");
     } else {
+      AppModule.currentUser = output.user;
       this.authorization
         .afAuth
         .auth
@@ -45,7 +47,8 @@ export class UserSignup extends BasePage {
           //al crear el usuario en firebase loguearse
           this.authorization.signInWithEmailAndPassword(this.newUser.email, this.newUser.password)
         }).bind(this)).catch((error => {
-          this.mostrarAlerta(error.name, error.message);
+          this.mostrarAlerta(error.name, error.message);          
+          this.navCtrl.setRoot(Dashboard);
         }).bind(this));
     }
   }

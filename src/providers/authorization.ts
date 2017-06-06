@@ -1,3 +1,4 @@
+import { AppModule } from '../app/app.module';
 import { Injectable, EventEmitter } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -12,6 +13,7 @@ export class Authorization {
   private authState: Observable<firebase.User>;
   public currentUser: firebase.User;
   success: EventEmitter<any> = new EventEmitter<any>();
+  error: EventEmitter<any> = new EventEmitter<any>();
 
   gToken: any;
 
@@ -32,18 +34,35 @@ export class Authorization {
   }
 
   public signInWithEmailAndPassword(email: string, pass: string): void {
+    if (AppModule.isWeb) {
+      this.signInWithEmailAndPasswordWeb(email, pass);
+    }
+
+  }
+
+  protected signInWithEmailAndPasswordWeb(email: string, pass: string): void {
     let provider = new firebase.auth.EmailAuthProvider();
 
     this.afAuth.auth.signInWithEmailAndPassword(email, pass).then((val => {
       if (val) {
         console.log("signInWithEmailAndPassword : ", val)
         this.currentUser = val.user ? val.user : val;
-      }
+      }  
+    }).bind(this)).catch((error=>{
+      this.error.emit(error);
     }).bind(this));
 
   }
 
   public signInWithGoogle(): void {
+    if (AppModule.isWeb) {
+      this.signInWithGoogleWeb();
+    } else {
+      this.signInWithGoogleCordova();
+    }
+  }
+
+  protected signInWithGoogleWeb(): void {
     let provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     this.afAuth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
@@ -61,8 +80,12 @@ export class Authorization {
       .catch(function (error) {
         console.log(error);
       });
+    return;
   }
 
+  protected signInWithGoogleCordova(): void {
+
+  }
 
 
 

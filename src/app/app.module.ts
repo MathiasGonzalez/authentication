@@ -110,7 +110,7 @@ export class AppModule {
 
   public static injector: Injector;
   public static isWeb: boolean;
-  public static user: User;
+  public static currentUser: User;
 
   constructor(injector: Injector) {
     AppModule.injector = injector;

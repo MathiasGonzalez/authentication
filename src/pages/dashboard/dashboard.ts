@@ -69,7 +69,7 @@ export class Dashboard extends PrivatePage {
     // });
 
     let input = new FirstSnippetsIn();
-    input.user =AppModule.user;
+    input.user =AppModule.currentUser;
     this.snippetsClient.firstSnippets(input).subscribe((result:FirstSnippetsOut) => {
       this.data= result.snippets;
     })
@@ -116,7 +116,7 @@ export class Dashboard extends PrivatePage {
     input.snippet.fields = [
       field
     ]
-    input.user = AppModule.user;
+    input.user = AppModule.currentUser;
     this.snippetsClient.addSnippet(input).subscribe(() => { })
   }
 

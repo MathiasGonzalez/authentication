@@ -54,6 +54,12 @@ export class MyApp {
     }).bind(this), ((error: any) => {
       this.logOut();
     }).bind(this));
+    //catch firebase
+    authorization.error.subscribe(((error: any) => {
+      if (!!AppModule.currentUser) {
+        this.nav.setRoot(Dashboard);
+      }
+    }).bind(this))
     // set our app's pages
     this.initializeSideBarLinks();
   }
@@ -81,6 +87,11 @@ export class MyApp {
     ];
   }
 
+
+  /**
+   * 
+   * @param {firebase.User} currentUser //usuario detectado por la autenticacion de FireBase
+   */
   protected login(currentUser: firebase.User): void {
     let input: LogInIn = new LogInIn();
     input.user = new User();
@@ -93,19 +104,23 @@ export class MyApp {
   }
 
   protected processlogin(output: LogInOut): void {
-    AppModule.user = output.user;
+    AppModule.currentUser = output.user;
     this.nav.setRoot(Dashboard);
   }
 
   protected logOut(): void {
     //cerrar todas las conexiones
-    this.realTimeDB.db.database.goOffline();
-    //desloguearse
-    this.authorization.signOut();
-    this.authorization.currentUser = undefined;
-    this.currentUser = null;
-    //volver al login
-    this.nav.setRoot(UserLogin);
+    try {
+      this.realTimeDB.db.database.goOffline();
+    } finally {
+      //desloguearse
+      this.authorization.signOut();
+      this.authorization.currentUser = undefined;
+      this.currentUser = null;
+      AppModule.currentUser = undefined;
+      //volver al login
+      this.nav.setRoot(UserLogin);
+    }
 
   }
 
