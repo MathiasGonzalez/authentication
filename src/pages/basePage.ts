@@ -1,21 +1,25 @@
 import { RealTimeDB } from '../providers/realTimeDB';
-import { NavController, NavParams } from "ionic-angular";
+import { NavController, NavParams, AlertController, AlertOptions } from "ionic-angular";
 import { AppModule } from "../app/app.module";
 import { Authorization } from "../providers/authorization";
+import { SnippetsClient } from "../generated/proxy";
 
 export class BasePage {
 
     authorization: Authorization;
     realtimeDb: RealTimeDB;
-
+    alertCtrl: AlertController;
+    snippetsClient: SnippetsClient;
     get isWeb(): boolean {
         return AppModule.isWeb;
     }
-    
+
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.authorization = AppModule.injector.get(Authorization);
         this.realtimeDb = AppModule.injector.get(RealTimeDB);
+        this.alertCtrl = AppModule.injector.get(AlertController);
+        this.snippetsClient = AppModule.injector.get(SnippetsClient);
     }
 
     /**
@@ -65,4 +69,19 @@ export class BasePage {
     // ionViewCanEnter	boolean/Promise<void>	Runs before the view can enter. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can enter
     // ionViewCanLeave	boolean/Promise<void>	Runs before the view can leave. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can leave
 
+    mostrarAlerta(title: string, message: string) {
+        let alertConfig: AlertOptions = {
+            title: title,
+            message: message,
+            buttons: ['Ok']
+        };
+        let alert = this.alertCtrl.create(alertConfig);
+        alert.present();
+    }
+    validateEmail(email: string) {
+        // var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let re = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+
+        return re.test(email);
+    }
 }

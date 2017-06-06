@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.inclevernet.authentication" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.inclever.authentication" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Authentication</name>
-    <description>An user authentication manager.</description>
+    <description>An user gists manager.</description>
     <author email="matgonzal90@gmail.com" href="https://inclever.net/">Inclever Net</author>
     <content src="index.html" />
     <access origin="*" />

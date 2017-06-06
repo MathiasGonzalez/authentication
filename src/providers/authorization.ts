@@ -4,14 +4,15 @@ import { AngularFireAuth } from 'angularfire2/auth';
 // Do not import from 'firebase' as you'll lose the tree shaking benefits
 import * as firebase from 'firebase/app';
 import { Observable } from "rxjs/Observable";
+import { User } from "../generated/proxy";
 
 @Injectable()
 export class Authorization {
 
   private authState: Observable<firebase.User>;
-  public currentUser: firebase.User;
+  public currentUser: firebase.User | User;
   success: EventEmitter<any> = new EventEmitter<any>();
-  
+
   gToken: any;
 
   constructor(public afAuth: AngularFireAuth) {
@@ -30,7 +31,19 @@ export class Authorization {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
   }
 
-  loginGoogle() {
+  public signInWithEmailAndPassword(email: string, pass: string): void {
+    let provider = new firebase.auth.EmailAuthProvider();
+
+    this.afAuth.auth.signInWithEmailAndPassword(email, pass).then(val => {
+      if (val) {
+        console.log("signInWithEmailAndPassword : ", val)
+        this.currentUser = val.user ? val.user : val;
+      }
+    });
+
+  }
+
+  public signInWithGoogle(): void {
     let provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     this.afAuth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
@@ -51,24 +64,9 @@ export class Authorization {
   }
 
 
-  // loginGoogle2() {
-  //   var provider = new firebase.auth.GoogleAuthProvider();
-  //   provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-  //   firebase.auth().signInWithRedirect(provider);
-  //   firebase.auth().getRedirectResult().then(function (result) {
-  //     if (result.credential) {
-  //       // This gives you a Google Access Token. You can use it to access the Google API.
-  //       var token = result.credential.accessToken;
-  //       // ...
-  //     }
-  //     // The signed-in user info.
-  //     var user = result.user;
-  //   }).catch(function (error) {
 
-  //   });
-  // }
 
-  signOut(): void {
+  public signOut(): void {
     this.afAuth.auth.signOut().then(() => {
       console.log("signed out")
     }, (error) => {
@@ -78,7 +76,7 @@ export class Authorization {
 
   displayName(): string {
     if (this.currentUser !== null) {
-      return this.currentUser.displayName;
+      return (<firebase.User>this.currentUser).displayName;
     } else {
       return '';
     }

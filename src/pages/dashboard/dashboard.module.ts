@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { Dashboard } from './dashboard';
+import { SampleModalPageModule } from "../sample-modal/sample-modal.module";
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { Dashboard } from './dashboard';
   ],
   imports: [
     IonicPageModule.forChild(Dashboard),
+    SampleModalPageModule
   ],
   exports: [
     Dashboard

@@ -6,45 +6,47 @@
       (ionCancel)="onCancel($event)">
     </ion-searchbar>
     <ion-buttons end>
-      <button ion-button icon-only (click)="mostrarSearchBar()"><ion-icon name="search"></ion-icon></button>
+      <button ion-button icon-only (click)="mostrarSearchBar()"><ion-icon name="{{!showSeacrhBar?'search':'close'}}"></ion-icon></button>
     </ion-buttons>
 
   </ion-navbar>
 </ion-header>
-<ion-content style="background:lightslategrey">
-
+<ion-content class="dashboard-content">
+ 
 
   <ion-grid>
+
     <ion-row>
       <ion-col col-md-3 col-0>
-         <ion-buttons start>
-          <button ion-button icon-only (click)="mostrarSearchBar()"><ion-icon name="search"></ion-icon></button>
+        <ion-buttons start>
+          <button ion-button icon-only (click)="addSnippet()"><ion-icon name="add"></ion-icon></button>
         </ion-buttons>
       </ion-col>
       <ion-col col-md-6 col-12>
         <ion-searchbar [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
         </ion-searchbar>
 
+
+
       </ion-col>
       <ion-col col-md-3 col-0></ion-col>
     </ion-row>
 
-    <ion-row >
-      <ion-col *ngFor="let item of data" col-lg-4 col-md-6 col-12>
-        <!--- ITEM -->
-        <ion-card  class="borde-sup-rojo">
+    <ion-row>
+      <ion-col *ngFor="let item of data" col-lg-4 col-md-6 col-12>      
+        <ion-card class="borde-sup-rojo">
           <ion-item>
-            <h2>{{  item?.fecha }}</h2>
+            <h2>{{ item?.fecha }}</h2>
           </ion-item>
           <ion-card-content>
             <ion-list>
-              <ion-item *ngFor="let item of item.fields" >
-                <ion-label stacked> {{item?.valor1}}</ion-label>
-                <ion-input type="text" value="{{item?.valor2}}"></ion-input>
-              </ion-item>              
+              <ion-item *ngFor="let item of item.fields">
+                <ion-label stacked> {{item?.name}}</ion-label>
+                <ion-input type="text" value="{{item?.value}}"></ion-input>
+              </ion-item>
             </ion-list>
-          </ion-card-content>         
-          <ion-item >
+          </ion-card-content>
+          <ion-item>
             <button *ngFor="let tag of item.tags" ion-button item-right (click)="mostrarModalConfirmacion(item)">{{ tag }}</button>
           </ion-item>
         </ion-card>

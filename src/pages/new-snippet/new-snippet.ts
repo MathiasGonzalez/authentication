@@ -1,23 +1,22 @@
-import { PrivatePage } from '../privatePage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-
-
 import { Field, Snippet } from "../../generated/proxy";
+import { PrivatePage } from "../privatePage";
 
 /**
- * Generated class for the DetalleItemPage page.
+ * Generated class for the NewSnippetPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 @IonicPage()
 @Component({
-  selector: 'page-detalle-item',
-  templateUrl: 'detalle-item.html',
+  selector: 'page-new-snippet',
+  templateUrl: 'new-snippet.html',
 })
-export class DetalleItemPage extends PrivatePage {
+export class NewSnippetPage extends PrivatePage {
 
+ 
   protected item: Snippet;
 
   protected newField: Field;
@@ -92,5 +91,6 @@ export class DetalleItemPage extends PrivatePage {
     if (this.newField)
       this.newField.isLink = <boolean>val;
   }
+
 
 }

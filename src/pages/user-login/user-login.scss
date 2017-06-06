@@ -4,11 +4,14 @@
       .toolbar::after,.header-md::after{ background-image:none;}
       ion-content{
         background-color:color($colors,primary);
-         background-image:url('../assets/images/bg-pattern.png');
+          background-image:url('../assets/images/bg-pattern.png');
+        // background-image:url('../assets/images/bg-gif.gif');
          background-size:100% auto;
       }
 
-
+      .hrLine{
+        padding-top:5px; 
+      }
       //.scroll-content { display: table; width: 100%; height: 100%; }
       .centerAlign { display: table-cell; vertical-align: middle; border:#ff0000 1px solid; }
 

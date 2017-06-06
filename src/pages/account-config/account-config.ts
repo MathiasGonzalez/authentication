@@ -1,28 +1,24 @@
-import { BasePage } from '../basePage';
-import { UserLogin } from '../user-login/user-login';
-import { AppModule } from '../../app/app.module';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the StartPage page.
+ * Generated class for the AccountConfigPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 @IonicPage()
 @Component({
-  selector: 'page-start',
-  templateUrl: 'start.html',
+  selector: 'page-account-config',
+  templateUrl: 'account-config.html',
 })
-export class StartPage extends BasePage {
+export class AccountConfigPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    super(navCtrl, navParams);   
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad StartPage');    
+    console.log('ionViewDidLoad AccountConfigPage');
   }
 
 }
