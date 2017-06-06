@@ -43,14 +43,11 @@ export class UserLogin extends BasePage {
     console.log('ionViewDidLoad UserLogin');
   }
 
-  dashboardPage() { this.navCtrl.push(Dashboard); }
-  signupPage() { this.navCtrl.push(UserSignup); }
-  forgotPasswordPage() { this.navCtrl.push(UserForgotpassword); }
-
   public loginWithGoogle() {
     this.authorization.signInWithGoogle()
     // .then(() => this.onSignInSuccess());
   }
+
   loginWithFacebook() {
     this.signInWithFacebook();
   }
@@ -82,5 +79,10 @@ export class UserLogin extends BasePage {
   get showSocialLogin(): boolean {
     return !this.currentUser || !this.currentUser.userName || this.currentUser.userName === '';
   }
+
+
+  dashboardPage() { this.navCtrl.push(Dashboard); }
+  signupPage() { this.navCtrl.push(UserSignup); }
+  forgotPasswordPage() { this.navCtrl.push(UserForgotpassword); }
 
 }

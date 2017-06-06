@@ -10,7 +10,7 @@ import { User } from "../generated/proxy";
 export class Authorization {
 
   private authState: Observable<firebase.User>;
-  public currentUser: firebase.User | User;
+  public currentUser: firebase.User;
   success: EventEmitter<any> = new EventEmitter<any>();
 
   gToken: any;
@@ -34,12 +34,12 @@ export class Authorization {
   public signInWithEmailAndPassword(email: string, pass: string): void {
     let provider = new firebase.auth.EmailAuthProvider();
 
-    this.afAuth.auth.signInWithEmailAndPassword(email, pass).then(val => {
+    this.afAuth.auth.signInWithEmailAndPassword(email, pass).then((val => {
       if (val) {
         console.log("signInWithEmailAndPassword : ", val)
         this.currentUser = val.user ? val.user : val;
       }
-    });
+    }).bind(this));
 
   }
 

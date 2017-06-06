@@ -41,12 +41,12 @@ export class UserSignup extends BasePage {
       this.authorization
         .afAuth
         .auth
-        .createUserWithEmailAndPassword(this.newUser.email, this.newUser.password).then(val => {
+        .createUserWithEmailAndPassword(this.newUser.email, this.newUser.password).then((val => {
           //al crear el usuario en firebase loguearse
           this.authorization.signInWithEmailAndPassword(this.newUser.email, this.newUser.password)
-        }).catch(error => {
+        }).bind(this)).catch((error => {
           this.mostrarAlerta(error.name, error.message);
-        });
+        }).bind(this));
     }
   }
 

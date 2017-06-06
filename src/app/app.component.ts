@@ -47,6 +47,7 @@ export class MyApp {
     authorization.success.subscribe(((user: firebase.User) => {
       if (this.currentUser == null && !!user) {
         this.login(user);
+        console.log("login ")
       }
       this.currentUser = user;
       console.log("USER:>", this.currentUser);
@@ -54,11 +55,7 @@ export class MyApp {
       this.logOut();
     }).bind(this));
     // set our app's pages
-    this.pages = [
-      { title: 'Dashbaord', icon: 'home', component: Dashboard },
-      { title: 'Confif', icon: 'settings', component: ConfigPage },
-      { title: 'Logout', icon: 'lock', component: UserLogin }
-    ];
+    this.initializeSideBarLinks();
   }
 
   initializeApp() {
@@ -76,13 +73,21 @@ export class MyApp {
     }
   }
 
+  initializeSideBarLinks() {
+    this.pages = [
+      { title: 'Dashbaord', icon: 'home', component: Dashboard },
+      { title: 'Confif', icon: 'settings', component: ConfigPage },
+      { title: 'Logout', icon: 'lock', component: UserLogin }
+    ];
+  }
+
   protected login(currentUser: firebase.User): void {
     let input: LogInIn = new LogInIn();
     input.user = new User();
     input.user.email = currentUser.email;
     input.user.userName = currentUser.displayName;
     input.user.uid = currentUser.uid;
-    //provocara un sign in
+    //provocara un sign in si no encuentra un usuario registrado con ese email
     input.fireBaseForce = true;
     this.loginClient.logIn(input).subscribe(this.processlogin.bind(this));
   }
