@@ -11,6 +11,8 @@
 #### destino
 `--platforms/android/build/outputs/apk`
 
+`ionic cordova run android --device`
+
 `ionic cordova  build android --prod --release`
 
 `cordova build --release android`
