@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { Field, Snippet } from "../../generated/proxy";
+import { Field, Snippet, AddSnippetIn, AddSnippetOut } from "../../generated/proxy";
 import { PrivatePage } from "../privatePage";
+import { AppModule } from "../../app/app.module";
 
 /**
  * Generated class for the NewSnippetPage page.
@@ -16,18 +17,18 @@ import { PrivatePage } from "../privatePage";
 })
 export class NewSnippetPage extends PrivatePage {
 
- 
-  protected item: Snippet;
+
+  protected currentSnippet: Snippet;
 
   protected newField: Field;
 
- 
+
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     super(navCtrl, navParams);
-    console.log(navParams.data);
-    this.item = navParams.data;
+    console.log("new Snippet navParamData :", navParams.data);
+    this.currentSnippet = navParams.data || new Snippet();
   }
   valor1Blured() {
     console.log("blured")
@@ -38,14 +39,15 @@ export class NewSnippetPage extends PrivatePage {
   }
 
   closeModal() {
-    this.viewCtrl.dismiss({ logout: false });
+    this.viewCtrl.dismiss();
   }
 
   save() {
-    let uid = this.authorization.currentUser.uid;
-    this.realtimeDb.get(`/${uid}/${this.item.id}`).set(JSON.parse(JSON.stringify(this.item)))
-    console.log(this.item);
-    //this.realtimeDb.save(JSON.parse(JSON.stringify(this.item)));
+    // let uid = this.authorization.currentUser.uid;
+    // this.realtimeDb.get(`/${uid}/${this.item.id}`).set(JSON.parse(JSON.stringify(this.item)))
+    // console.log(this.item);
+    // //this.realtimeDb.save(JSON.parse(JSON.stringify(this.item)));
+    this.addSnippet();
   }
 
 
@@ -60,7 +62,7 @@ export class NewSnippetPage extends PrivatePage {
   }
 
   pushNewFields() {
-    this.item.fields.push(JSON.parse(JSON.stringify(this.newField)));
+    this.currentSnippet.fields.push(JSON.parse(JSON.stringify(this.newField)));
   }
 
 
@@ -91,6 +93,22 @@ export class NewSnippetPage extends PrivatePage {
     if (this.newField)
       this.newField.isLink = <boolean>val;
   }
+
+
+  //#region
+  addSnippet() {
+    let input = new AddSnippetIn();
+    input.snippet = this.currentSnippet;
+    input.user = AppModule.currentUser;
+    this.snippetsClient.addSnippet(input).subscribe(this.processAddSnippet.bind(this))
+  }
+
+  protected processAddSnippet(output: AddSnippetOut): void {
+    if (output.result === "OK") {
+      this.viewCtrl.dismiss(output.snippet);
+    }
+  }
+  //#endregion
 
 
 }

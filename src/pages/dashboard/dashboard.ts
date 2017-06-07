@@ -1,3 +1,4 @@
+import { NewSnippetPage } from '../new-snippet/new-snippet';
 import { PrivatePage } from '../privatePage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
@@ -105,22 +106,14 @@ export class Dashboard extends PrivatePage {
     profileModal.present();
 
   }
-  addSnippet() {
-    let input = new AddSnippetIn();
-    input.snippet = new Snippet();
-    input.snippet.description = "Prueba";
-    input.snippet.title = "prueba";
-    let field = new Field();
-    field.name = "sad";
-    field.value = "werwer";
-    input.snippet.fields = [
-      field
-    ]
-    input.user = AppModule.currentUser;
-    this.snippetsClient.addSnippet(input).subscribe(this.processAddSnippet.bind(this))
+  public addSnippet(): void {
+    let profileModal = this.modalController.create(NewSnippetPage, null);
+    profileModal.onDidDismiss(this.processAddSnippet.bind(this));
+    profileModal.present();
   }
+
   protected processAddSnippet(output: AddSnippetOut): void {
-    if (output.result === "OK") {
+    if (output && output.result === "OK") {
       this.data.push(output.snippet);
     }
   }

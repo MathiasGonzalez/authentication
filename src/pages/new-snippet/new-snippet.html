@@ -26,10 +26,10 @@
         <ion-item *ngFor="let item of item.fields">
           <!--Es Link-->
           <ion-label stacked *ngIf="item?.isLink">
-            <a href="{{item?.valor2}}">{{item?.valor1}}</a>
+            <a href="{{item?.valor2}}">{{item?.name}}</a>
           </ion-label>
           <!-- No es Link-->
-          <ion-label *ngIf="!item?.isLink" stacked> {{item?.valor1}}</ion-label>
+          <ion-label *ngIf="!item?.isLink" stacked> {{item?.value}}</ion-label>
           <ion-input *ngIf="!item?.isLink" type="text" (blur)="valor1Blured()" value="{{item?.valor2}}"></ion-input>
         </ion-item>
         <!-- New Field Container-->
