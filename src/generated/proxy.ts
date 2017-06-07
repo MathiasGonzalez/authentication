@@ -238,6 +238,7 @@ export class SnippetsClient {
 export class LogInIn implements ILogInIn {
     fireBaseForce?: boolean | undefined;
     user?: User | undefined;
+    result?: string | undefined;
 
     constructor(data?: ILogInIn) {
         if (data) {
@@ -252,6 +253,7 @@ export class LogInIn implements ILogInIn {
         if (data) {
             this.fireBaseForce = data["fireBaseForce"];
             this.user = data["user"] ? User.fromJS(data["user"]) : <any>undefined;
+            this.result = data["result"];
         }
     }
 
@@ -265,6 +267,7 @@ export class LogInIn implements ILogInIn {
         data = typeof data === 'object' ? data : {};
         data["fireBaseForce"] = this.fireBaseForce;
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+        data["result"] = this.result;
         return data; 
     }
 }
@@ -272,6 +275,7 @@ export class LogInIn implements ILogInIn {
 export interface ILogInIn {
     fireBaseForce?: boolean | undefined;
     user?: User | undefined;
+    result?: string | undefined;
 }
 
 export class User implements IUser {
@@ -378,6 +382,7 @@ export interface ILogInOut {
 
 export class SignUpIn implements ISignUpIn {
     user?: User | undefined;
+    result?: string | undefined;
 
     constructor(data?: ISignUpIn) {
         if (data) {
@@ -391,6 +396,7 @@ export class SignUpIn implements ISignUpIn {
     init(data?: any) {
         if (data) {
             this.user = data["user"] ? User.fromJS(data["user"]) : <any>undefined;
+            this.result = data["result"];
         }
     }
 
@@ -403,12 +409,14 @@ export class SignUpIn implements ISignUpIn {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+        data["result"] = this.result;
         return data; 
     }
 }
 
 export interface ISignUpIn {
     user?: User | undefined;
+    result?: string | undefined;
 }
 
 export class SignUpOut implements ISignUpOut {
@@ -452,6 +460,7 @@ export interface ISignUpOut {
 
 export class FirstSnippetsIn implements IFirstSnippetsIn {
     user?: User | undefined;
+    result?: string | undefined;
 
     constructor(data?: IFirstSnippetsIn) {
         if (data) {
@@ -465,6 +474,7 @@ export class FirstSnippetsIn implements IFirstSnippetsIn {
     init(data?: any) {
         if (data) {
             this.user = data["user"] ? User.fromJS(data["user"]) : <any>undefined;
+            this.result = data["result"];
         }
     }
 
@@ -477,17 +487,19 @@ export class FirstSnippetsIn implements IFirstSnippetsIn {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+        data["result"] = this.result;
         return data; 
     }
 }
 
 export interface IFirstSnippetsIn {
     user?: User | undefined;
+    result?: string | undefined;
 }
 
 export class FirstSnippetsOut implements IFirstSnippetsOut {
-    result?: string | undefined;
     snippets?: Snippet[] | undefined;
+    result?: string | undefined;
 
     constructor(data?: IFirstSnippetsOut) {
         if (data) {
@@ -500,12 +512,12 @@ export class FirstSnippetsOut implements IFirstSnippetsOut {
 
     init(data?: any) {
         if (data) {
-            this.result = data["result"];
             if (data["snippets"] && data["snippets"].constructor === Array) {
                 this.snippets = [];
                 for (let item of data["snippets"])
                     this.snippets.push(Snippet.fromJS(item));
             }
+            this.result = data["result"];
         }
     }
 
@@ -517,28 +529,28 @@ export class FirstSnippetsOut implements IFirstSnippetsOut {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["result"] = this.result;
         if (this.snippets && this.snippets.constructor === Array) {
             data["snippets"] = [];
             for (let item of this.snippets)
                 data["snippets"].push(item.toJSON());
         }
+        data["result"] = this.result;
         return data; 
     }
 }
 
 export interface IFirstSnippetsOut {
-    result?: string | undefined;
     snippets?: Snippet[] | undefined;
+    result?: string | undefined;
 }
 
 export class Snippet implements ISnippet {
-    guid?: string | undefined;
+    snipetid?: string | undefined;
     id?: number | undefined;
     groupid?: number | undefined;
     title?: string | undefined;
     description?: string | undefined;
-    tags?: string | undefined;
+    tags?: Tag[] | undefined;
     date?: Date | undefined;
     fields?: Field[] | undefined;
     group?: Group | undefined;
@@ -554,12 +566,16 @@ export class Snippet implements ISnippet {
 
     init(data?: any) {
         if (data) {
-            this.guid = data["guid"];
+            this.snipetid = data["snipetid"];
             this.id = data["id"];
             this.groupid = data["groupid"];
             this.title = data["title"];
             this.description = data["description"];
-            this.tags = data["tags"];
+            if (data["tags"] && data["tags"].constructor === Array) {
+                this.tags = [];
+                for (let item of data["tags"])
+                    this.tags.push(Tag.fromJS(item));
+            }
             this.date = data["date"] ? new Date(data["date"].toString()) : <any>undefined;
             if (data["fields"] && data["fields"].constructor === Array) {
                 this.fields = [];
@@ -578,12 +594,16 @@ export class Snippet implements ISnippet {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["guid"] = this.guid;
+        data["snipetid"] = this.snipetid;
         data["id"] = this.id;
         data["groupid"] = this.groupid;
         data["title"] = this.title;
         data["description"] = this.description;
-        data["tags"] = this.tags;
+        if (this.tags && this.tags.constructor === Array) {
+            data["tags"] = [];
+            for (let item of this.tags)
+                data["tags"].push(item.toJSON());
+        }
         data["date"] = this.date ? this.date.toISOString() : <any>undefined;
         if (this.fields && this.fields.constructor === Array) {
             data["fields"] = [];
@@ -596,15 +616,62 @@ export class Snippet implements ISnippet {
 }
 
 export interface ISnippet {
-    guid?: string | undefined;
+    snipetid?: string | undefined;
     id?: number | undefined;
     groupid?: number | undefined;
     title?: string | undefined;
     description?: string | undefined;
-    tags?: string | undefined;
+    tags?: Tag[] | undefined;
     date?: Date | undefined;
     fields?: Field[] | undefined;
     group?: Group | undefined;
+}
+
+export class Tag implements ITag {
+    tag?: string | undefined;
+    snippets?: Snippet[] | undefined;
+
+    constructor(data?: ITag) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tag = data["tag"];
+            if (data["snippets"] && data["snippets"].constructor === Array) {
+                this.snippets = [];
+                for (let item of data["snippets"])
+                    this.snippets.push(Snippet.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): Tag {
+        let result = new Tag();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tag"] = this.tag;
+        if (this.snippets && this.snippets.constructor === Array) {
+            data["snippets"] = [];
+            for (let item of this.snippets)
+                data["snippets"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface ITag {
+    tag?: string | undefined;
+    snippets?: Snippet[] | undefined;
 }
 
 export class Field implements IField {
@@ -614,6 +681,8 @@ export class Field implements IField {
     value?: string | undefined;
     isLink?: boolean | undefined;
     code?: FieldCode | undefined;
+    snipettid?: string | undefined;
+    snipett?: Snippet | undefined;
 
     constructor(data?: IField) {
         if (data) {
@@ -632,6 +701,8 @@ export class Field implements IField {
             this.value = data["value"];
             this.isLink = data["isLink"];
             this.code = data["code"];
+            this.snipettid = data["snipettid"];
+            this.snipett = data["snipett"] ? Snippet.fromJS(data["snipett"]) : <any>undefined;
         }
     }
 
@@ -649,6 +720,8 @@ export class Field implements IField {
         data["value"] = this.value;
         data["isLink"] = this.isLink;
         data["code"] = this.code;
+        data["snipettid"] = this.snipettid;
+        data["snipett"] = this.snipett ? this.snipett.toJSON() : <any>undefined;
         return data; 
     }
 }
@@ -660,6 +733,8 @@ export interface IField {
     value?: string | undefined;
     isLink?: boolean | undefined;
     code?: FieldCode | undefined;
+    snipettid?: string | undefined;
+    snipett?: Snippet | undefined;
 }
 
 export class Group implements IGroup {
@@ -784,6 +859,7 @@ export class AddSnippetIn implements IAddSnippetIn {
     snippet?: Snippet | undefined;
     group?: Group | undefined;
     user?: User | undefined;
+    result?: string | undefined;
 
     constructor(data?: IAddSnippetIn) {
         if (data) {
@@ -799,6 +875,7 @@ export class AddSnippetIn implements IAddSnippetIn {
             this.snippet = data["snippet"] ? Snippet.fromJS(data["snippet"]) : <any>undefined;
             this.group = data["group"] ? Group.fromJS(data["group"]) : <any>undefined;
             this.user = data["user"] ? User.fromJS(data["user"]) : <any>undefined;
+            this.result = data["result"];
         }
     }
 
@@ -813,6 +890,7 @@ export class AddSnippetIn implements IAddSnippetIn {
         data["snippet"] = this.snippet ? this.snippet.toJSON() : <any>undefined;
         data["group"] = this.group ? this.group.toJSON() : <any>undefined;
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+        data["result"] = this.result;
         return data; 
     }
 }
@@ -821,10 +899,13 @@ export interface IAddSnippetIn {
     snippet?: Snippet | undefined;
     group?: Group | undefined;
     user?: User | undefined;
+    result?: string | undefined;
 }
 
 export class AddSnippetOut implements IAddSnippetOut {
     user?: User | undefined;
+    snippet?: Snippet | undefined;
+    result?: string | undefined;
 
     constructor(data?: IAddSnippetOut) {
         if (data) {
@@ -838,6 +919,8 @@ export class AddSnippetOut implements IAddSnippetOut {
     init(data?: any) {
         if (data) {
             this.user = data["user"] ? User.fromJS(data["user"]) : <any>undefined;
+            this.snippet = data["snippet"] ? Snippet.fromJS(data["snippet"]) : <any>undefined;
+            this.result = data["result"];
         }
     }
 
@@ -850,12 +933,16 @@ export class AddSnippetOut implements IAddSnippetOut {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+        data["snippet"] = this.snippet ? this.snippet.toJSON() : <any>undefined;
+        data["result"] = this.result;
         return data; 
     }
 }
 
 export interface IAddSnippetOut {
     user?: User | undefined;
+    snippet?: Snippet | undefined;
+    result?: string | undefined;
 }
 
 export enum UserStatus {

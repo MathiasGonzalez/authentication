@@ -6,7 +6,7 @@ import { MainItem } from "../../entities/mainItem";
 
 import { SampleModalPage } from "../sample-modal/sample-modal";
 import { UserLogin } from "../user-login/user-login";
-import { AddSnippetIn, Snippet, FirstSnippetsIn, FirstSnippetsOut, Field } from "../../generated/proxy";
+import { AddSnippetIn, Snippet, FirstSnippetsIn, FirstSnippetsOut, Field, AddSnippetOut } from "../../generated/proxy";
 import { AppModule } from "../../app/app.module";
 
 /**
@@ -69,9 +69,9 @@ export class Dashboard extends PrivatePage {
     // });
 
     let input = new FirstSnippetsIn();
-    input.user =AppModule.currentUser;
-    this.snippetsClient.firstSnippets(input).subscribe((result:FirstSnippetsOut) => {
-      this.data= result.snippets;
+    input.user = AppModule.currentUser;
+    this.snippetsClient.firstSnippets(input).subscribe((result: FirstSnippetsOut) => {
+      this.data = result.snippets;
     })
 
 
@@ -110,21 +110,25 @@ export class Dashboard extends PrivatePage {
     input.snippet = new Snippet();
     input.snippet.description = "Prueba";
     input.snippet.title = "prueba";
-    let field= new Field();
-    field.name ="sad";
-     field.value ="werwer";
+    let field = new Field();
+    field.name = "sad";
+    field.value = "werwer";
     input.snippet.fields = [
       field
     ]
     input.user = AppModule.currentUser;
-    this.snippetsClient.addSnippet(input).subscribe(() => { })
+    this.snippetsClient.addSnippet(input).subscribe(this.processAddSnippet.bind(this))
+  }
+  protected processAddSnippet(output: AddSnippetOut): void {
+    if (output.result === "OK") {
+      this.data.push(output.snippet);
+    }
   }
 
-  
 
 
-  protected data:Array<Snippet> = [
-    
+  protected data: Array<Snippet> = [
+
   ];
 
 }
