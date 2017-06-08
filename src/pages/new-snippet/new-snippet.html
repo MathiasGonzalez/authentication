@@ -1,4 +1,3 @@
-
 <ion-header>
 
   <ion-navbar>
@@ -17,20 +16,22 @@
 
 
 <ion-content padding>
-  <ion-card class="borde-sup-rojo">
+
+  <ion-title *ngIf="!!currentSnippet?.fields || currentSnippet?.fields?.length===0">sdf</ion-title>
+  <ion-card class="borde-sup-rojo" *ngIf="currentSnippet">
     <ion-item>
-      <h2>{{ item?.fecha }}</h2>
+      <h2>{{ currentSnippet?.fecha }}</h2>
     </ion-item>
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let item of item.fields">
+        <ion-item *ngFor="let field of currentSnippet?.fields">
           <!--Es Link-->
-          <ion-label stacked *ngIf="item?.isLink">
-            <a href="{{item?.valor2}}">{{item?.name}}</a>
+          <ion-label stacked *ngIf="field?.isLink">
+            <a href="{{field?.value}}">{{item?.value}}</a>
           </ion-label>
           <!-- No es Link-->
-          <ion-label *ngIf="!item?.isLink" stacked> {{item?.value}}</ion-label>
-          <ion-input *ngIf="!item?.isLink" type="text" (blur)="valor1Blured()" value="{{item?.valor2}}"></ion-input>
+          <ion-label *ngIf="!field?.isLink" stacked> {{field?.name}}</ion-label>
+          <ion-input *ngIf="!field?.isLink" type="text" (blur)="valor1Blured()" value="{{field?.value}}"></ion-input>
         </ion-item>
         <!-- New Field Container-->
         <div class="new-field-container" *ngIf="newField">
@@ -51,17 +52,51 @@
     </ion-card-content>
     <ion-list>
       <ion-item>
-        <button ion-fab icon-only mini (click)="addFields()"><ion-icon name="add"></ion-icon></button>
+        <!--<button ion-fab icon-only mini (click)="addFields()"><ion-icon name="add"></ion-icon></button>
+        <button ion-fab icon-only mini (click)="cancelNewField()"><ion-icon name="cancel"></ion-icon></button>-->
+
       </ion-item>
     </ion-list>
     <!--tags-->
     <ion-item>
-      <button *ngFor="let tag of item.tags" ion-button item-right>{{ tag }}</button>
+      <button *ngFor="let tag of currentSnippet?.tags" ion-button item-right>{{ tag }}</button>
     </ion-item>
   </ion-card>
 
-  <ion-item>
-    <button (click)="save()" big ion-button>Guardar</button>
-  </ion-item>
-  
+  <!--<ion-item>
+    <button (click)="saveSnippet()" big ion-button>Guardar</button>
+  </ion-item>-->
+
+  <ion-footer>
+    <ion-buttons start>
+      <!--<button ion-fab icon-only mini (click)="addFields()"><ion-icon name="add"></ion-icon></button>
+      <button ion-fab icon-only mini (click)="cancelNewField()"><ion-icon name="close"></ion-icon></button>-->
+
+      <button icon-right ion-button (click)="addFields()">{{newField ? 'Agregar campo' : 'Nuevo campo'}}<ion-icon *ngIf="!newField" name="add"></ion-icon></button>
+      <button *ngIf="newField" icon-right ion-button (click)="cleanNewField()">{{'Limpiar'}}<ion-icon *ngIf="!newField" name="clean"></ion-icon></button>
+      <button *ngIf="newField" ion-button icon-only (click)="cancelNewField()"><ion-icon name="remove-circle"></ion-icon></button>
+
+    </ion-buttons>
+    <!--<button ion-fab icon-only mini (click)="addFields()"><ion-icon name="add"></ion-icon></button>
+      <button ion-fab icon-only mini (click)="cancelNewField()"><ion-icon name="close"></ion-icon></button>-->
+
+
+
+
+  </ion-footer>
+
 </ion-content>
+
+
+
+
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons end>
+      <button (click)="saveSnippet()" big ion-button>Cancelar</button>
+      <button (click)="accept()" big ion-button>Guardar</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

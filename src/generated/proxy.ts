@@ -263,7 +263,7 @@ export class LogInIn implements ILogInIn {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["fireBaseForce"] = this.fireBaseForce;
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
@@ -316,7 +316,7 @@ export class User implements IUser {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["userid"] = this.userid;
         data["uid"] = this.uid;
@@ -367,7 +367,7 @@ export class LogInOut implements ILogInOut {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["result"] = this.result;
@@ -406,7 +406,7 @@ export class SignUpIn implements ISignUpIn {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["result"] = this.result;
@@ -445,7 +445,7 @@ export class SignUpOut implements ISignUpOut {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["result"] = this.result;
@@ -484,7 +484,7 @@ export class FirstSnippetsIn implements IFirstSnippetsIn {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["result"] = this.result;
@@ -527,7 +527,7 @@ export class FirstSnippetsOut implements IFirstSnippetsOut {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         if (this.snippets && this.snippets.constructor === Array) {
             data["snippets"] = [];
@@ -592,7 +592,7 @@ export class Snippet implements ISnippet {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["snipetid"] = this.snipetid;
         data["id"] = this.id;
@@ -657,7 +657,7 @@ export class Tag implements ITag {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["tag"] = this.tag;
         if (this.snippets && this.snippets.constructor === Array) {
@@ -712,7 +712,7 @@ export class Field implements IField {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
@@ -781,7 +781,7 @@ export class Group implements IGroup {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["groupid"] = this.groupid;
         data["title"] = this.title;
@@ -840,7 +840,7 @@ export class Category implements ICategory {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["categoryid"] = this.categoryid;
         data["name"] = this.name;
@@ -885,7 +885,7 @@ export class AddSnippetIn implements IAddSnippetIn {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["snippet"] = this.snippet ? this.snippet.toJSON() : <any>undefined;
         data["group"] = this.group ? this.group.toJSON() : <any>undefined;
@@ -930,7 +930,7 @@ export class AddSnippetOut implements IAddSnippetOut {
         return result;
     }
 
-    toJSON(data?: any) {
+   public toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["snippet"] = this.snippet ? this.snippet.toJSON() : <any>undefined;

@@ -34,9 +34,9 @@
 
     <ion-row>
       <ion-col *ngFor="let item of data" col-lg-4 col-md-6 col-12>      
-        <ion-card class="borde-sup-rojo">
+        <ion-card class="borde-sup-rojo" >
           <ion-item>
-            <h2>{{ item?.fecha }}</h2>
+            <h2 (click)="editSnippet(item)">Editar {{ item?.fecha }}</h2>
           </ion-item>
           <ion-card-content>
             <ion-list>

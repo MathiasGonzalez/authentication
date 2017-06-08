@@ -37,6 +37,10 @@
           <ion-label *ngIf="!item?.isLink" stacked> {{item?.name}}</ion-label>
           <ion-input *ngIf="!item?.isLink" type="text" (blur)="valor1Blured()" value="{{item?.value}}"></ion-input>
         </ion-item>
+        <ion-item *ngFor="let item of item.fields">         
+          <ion-label *ngIf="!item?.isLink" stacked></ion-label>
+          <ion-input *ngIf="!item?.isLink" type="text" (blur)="valor1Blured()" value=""></ion-input>
+        </ion-item>
         <!-- New Field Container-->
         <div class="new-field-container" *ngIf="newField">
           <ion-item>

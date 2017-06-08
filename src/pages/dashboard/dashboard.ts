@@ -114,11 +114,29 @@ export class Dashboard extends PrivatePage {
 
   protected processAddSnippet(output: AddSnippetOut): void {
     if (output && output.result === "OK") {
-      this.data.push(output.snippet);
+      if (this.data) {
+        this.data.push(output.snippet);
+      } else {
+        this.data = [output.snippet];
+      }
     }
   }
 
+  protected editSnippet(snippet: Snippet) {
+    let profileModal = this.modalController.create(NewSnippetPage, snippet);
+    profileModal.onDidDismiss(this.processEditSnippet.bind(this));
+    profileModal.present();
+  }
 
+  protected processEditSnippet(output: AddSnippetOut): void {
+    if (output && output.result === "OK") {
+      if (this.data) {
+        this.data.push(output.snippet);
+      } else {
+        this.data = [output.snippet];
+      }
+    }
+  }
 
   protected data: Array<Snippet> = [
 
