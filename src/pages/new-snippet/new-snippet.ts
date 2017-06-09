@@ -24,8 +24,8 @@ export class NewSnippetPage extends PrivatePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     super(navCtrl, navParams);
-    this._isEditing = !!navParams.data;
-    this.currentSnippet = navParams.data || new Snippet();
+    this._isEditing = !!navParams.data && !!navParams.data.groupid;
+    this.currentSnippet = this._isEditing ? navParams.data : new Snippet();
     if (!this.currentSnippet.fields) {
       this.currentSnippet.fields = [];
     }
@@ -49,7 +49,7 @@ export class NewSnippetPage extends PrivatePage {
     // //this.realtimeDb.save(JSON.parse(JSON.stringify(this.item)));
     if (this.checkSnippetData()) {
       if (this._isEditing) {
-
+        this.editSnippet();
       } else {
         this.addSnippet();
       }
@@ -111,14 +111,32 @@ export class NewSnippetPage extends PrivatePage {
   //#region
   protected addSnippet(): void {
     let input = new AddSnippetIn();
+
     input.snippet = this.currentSnippet;
     input.user = AppModule.currentUser;
 
     this.snippetsClient.addSnippet(input).subscribe(this.processAddSnippet.bind(this))
   }
 
+  protected editSnippet(): void {
+    let input = new AddSnippetIn();
+    delete (<any>this.currentSnippet).component;
+    input.snippet = this.currentSnippet;
+    input.user = AppModule.currentUser;
+
+    this.snippetsClient.editSnippet(input).subscribe(this.processEditSnippet.bind(this))
+  }
+
   protected processAddSnippet(output: AddSnippetOut): void {
     this.viewCtrl.dismiss(output);
+  }
+
+  protected processEditSnippet(output: AddSnippetOut): void {
+    this.viewCtrl.dismiss(output);
+  }
+
+  protected cancel(): void {
+    this.viewCtrl.dismiss();
   }
   //#endregion
 

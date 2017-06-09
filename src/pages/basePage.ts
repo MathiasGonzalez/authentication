@@ -10,10 +10,11 @@ export class BasePage {
     realtimeDb: RealTimeDB;
     alertCtrl: AlertController;
     snippetsClient: SnippetsClient;
+
+
     get isWeb(): boolean {
         return AppModule.isWeb;
     }
-
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.authorization = AppModule.injector.get(Authorization);
@@ -69,19 +70,24 @@ export class BasePage {
     // ionViewCanEnter	boolean/Promise<void>	Runs before the view can enter. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can enter
     // ionViewCanLeave	boolean/Promise<void>	Runs before the view can leave. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can leave
 
-    mostrarAlerta(title: string, message: string) {
+    public showAlert(title: string, message: string, buttons: string[] = ['Ok']): void {
         let alertConfig: AlertOptions = {
             title: title,
             message: message,
-            buttons: ['Ok']
+            buttons: buttons
         };
         let alert = this.alertCtrl.create(alertConfig);
         alert.present();
     }
+
     validateEmail(email: string) {
         // var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let re = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-
         return re.test(email);
+    }
+
+    validFileNamePath(path: string) {
+        let reg = /^(?:[a-zA-Z]\:|\\\\[\w\.]+\\[\w.$]+)\\(?:[\w]+\\)*\w([\w.])+$/;
+        return reg.test(path);
     }
 }

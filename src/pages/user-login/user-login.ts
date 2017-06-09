@@ -75,9 +75,9 @@ export class UserLogin extends BasePage {
       AppModule.currentUser = output.user;
       this.authorization.signInWithEmailAndPassword(output.user.email, this.currentUser.password);
     } else if (output.result === "NULLDATA") {
-      this.mostrarAlerta("Error", "Información incorrecta:" + output.result);
+      this.showAlert("Error", "Información incorrecta:" + output.result);
     } else if (output.result === "FAIL") {
-      this.mostrarAlerta("Error", "Usuario incorrecto:" + output.result);
+      this.showAlert("Error", "Usuario incorrecto:" + output.result);
     }
   }
 

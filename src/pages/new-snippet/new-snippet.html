@@ -23,7 +23,7 @@
       <h2>{{ currentSnippet?.fecha }}</h2>
     </ion-item>
     <ion-card-content>
-      <ion-list>
+      <ion-list *ngIf="!newField">
         <ion-item *ngFor="let field of currentSnippet?.fields">
           <!--Es Link-->
           <ion-label stacked *ngIf="field?.isLink">
@@ -31,10 +31,26 @@
           </ion-label>
           <!-- No es Link-->
           <ion-label *ngIf="!field?.isLink" stacked> {{field?.name}}</ion-label>
-          <ion-input *ngIf="!field?.isLink" type="text" (blur)="valor1Blured()" value="{{field?.value}}"></ion-input>
+          <ion-textarea *ngIf="!field?.isLink" type="text" (blur)="valor1Blured()" [(ngModel)]="field.value"></ion-textarea>
         </ion-item>
         <!-- New Field Container-->
-        <div class="new-field-container" *ngIf="newField">
+        <!--<div class="new-field-container" *ngIf="newField">
+          <ion-item>
+            <ion-label stacked> Valor 1 </ion-label>
+            <ion-input stacked placeholder="valor1" type="text" [(ngModel)]="newValor1"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked> {{ isLink ? 'Dirección' : 'Valor 2'}} </ion-label>
+            <ion-input stacked placeholder="valor2" type="text" [(ngModel)]="newValor2"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>is Link?</ion-label>
+            <ion-checkbox [(ngModel)]="isLink"></ion-checkbox>
+          </ion-item>
+        </div>-->
+      </ion-list>
+      <ion-list *ngIf="newField">
+        <div class="new-field-container" >
           <ion-item>
             <ion-label stacked> Valor 1 </ion-label>
             <ion-input stacked placeholder="valor1" type="text" [(ngModel)]="newValor1"></ion-input>
@@ -95,8 +111,8 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons end>
-      <button (click)="saveSnippet()" big ion-button>Cancelar</button>
-      <button (click)="accept()" big ion-button>Guardar</button>
+      <button (click)="cancel()" big ion-button>Cancelar</button>
+      <button (click)="accept()" big ion-button>Guardar Cambios</button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>

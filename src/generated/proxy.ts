@@ -233,6 +233,54 @@ export class SnippetsClient {
         }
         return Observable.of<AddSnippetOut | null>(<any>null);
     }
+
+    /**
+     * @return OK
+     */
+    editSnippet(input: AddSnippetIn): Observable<AddSnippetOut | null> {
+        let url_ = this.baseUrl + "/api/Snippets/EditSnippet";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input ? input.toJSON() : null);
+        
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8", 
+                "Accept": "application/json; charset=UTF-8"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processEditSnippet(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processEditSnippet(response_);
+                } catch (e) {
+                    return <Observable<AddSnippetOut>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<AddSnippetOut>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processEditSnippet(response: Response): Observable<AddSnippetOut | null> {
+        const status = response.status; 
+
+        if (status === 200) {
+            const responseText = response.text();
+            let result200: AddSnippetOut | null = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? AddSnippetOut.fromJS(resultData200) : new AddSnippetOut();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return Observable.of<AddSnippetOut | null>(<any>null);
+    }
 }
 
 export class LogInIn implements ILogInIn {
@@ -263,7 +311,7 @@ export class LogInIn implements ILogInIn {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["fireBaseForce"] = this.fireBaseForce;
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
@@ -316,7 +364,7 @@ export class User implements IUser {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["userid"] = this.userid;
         data["uid"] = this.uid;
@@ -367,7 +415,7 @@ export class LogInOut implements ILogInOut {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["result"] = this.result;
@@ -406,7 +454,7 @@ export class SignUpIn implements ISignUpIn {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["result"] = this.result;
@@ -445,7 +493,7 @@ export class SignUpOut implements ISignUpOut {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["result"] = this.result;
@@ -484,7 +532,7 @@ export class FirstSnippetsIn implements IFirstSnippetsIn {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["result"] = this.result;
@@ -527,7 +575,7 @@ export class FirstSnippetsOut implements IFirstSnippetsOut {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         if (this.snippets && this.snippets.constructor === Array) {
             data["snippets"] = [];
@@ -592,7 +640,7 @@ export class Snippet implements ISnippet {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["snipetid"] = this.snipetid;
         data["id"] = this.id;
@@ -657,7 +705,7 @@ export class Tag implements ITag {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["tag"] = this.tag;
         if (this.snippets && this.snippets.constructor === Array) {
@@ -712,7 +760,7 @@ export class Field implements IField {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
@@ -781,7 +829,7 @@ export class Group implements IGroup {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["groupid"] = this.groupid;
         data["title"] = this.title;
@@ -840,7 +888,7 @@ export class Category implements ICategory {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["categoryid"] = this.categoryid;
         data["name"] = this.name;
@@ -885,7 +933,7 @@ export class AddSnippetIn implements IAddSnippetIn {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["snippet"] = this.snippet ? this.snippet.toJSON() : <any>undefined;
         data["group"] = this.group ? this.group.toJSON() : <any>undefined;
@@ -930,7 +978,7 @@ export class AddSnippetOut implements IAddSnippetOut {
         return result;
     }
 
-   public toJSON(data?: any) {
+    toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         data["snippet"] = this.snippet ? this.snippet.toJSON() : <any>undefined;

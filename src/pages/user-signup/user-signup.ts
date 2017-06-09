@@ -37,7 +37,7 @@ export class UserSignup extends BasePage {
 
   protected processSignUp(output: SignUpOut): void {
     if (output.result === "YA EXISTE") {
-      this.mostrarAlerta("Usuario Existente", "Ya existe un usuario con ese nombre ó email.");
+      this.showAlert("Usuario Existente", "Ya existe un usuario con ese nombre ó email.");
     } else {
       AppModule.currentUser = output.user;
       this.authorization
@@ -47,7 +47,7 @@ export class UserSignup extends BasePage {
           //al crear el usuario en firebase loguearse
           this.authorization.signInWithEmailAndPassword(this.newUser.email, this.newUser.password)
         }).bind(this)).catch((error => {
-          this.mostrarAlerta(error.name, error.message);          
+          this.showAlert(error.name, error.message);          
           this.navCtrl.setRoot(Dashboard);
         }).bind(this));
     }
@@ -58,15 +58,15 @@ export class UserSignup extends BasePage {
       return false;
     }
     if (this.newUser.email == null || this.newUser.email === "") {
-      this.mostrarAlerta("Información invalida", "Ingrese un  email.");
+      this.showAlert("Información invalida", "Ingrese un  email.");
       return false;
     }
     if (!this.validateEmail(this.newUser.email)) {
-      this.mostrarAlerta("Información invalida", "Ingrese un email valido .");
+      this.showAlert("Información invalida", "Ingrese un email valido .");
       return false;
     }
     if (!this.newUser.userName) {
-      this.mostrarAlerta("Información invalida", "Ingrese una  nombre de usuario .");
+      this.showAlert("Información invalida", "Ingrese una  nombre de usuario .");
       return false;
     }
     return true;
@@ -74,11 +74,11 @@ export class UserSignup extends BasePage {
 
   protected checkPassword(): boolean {
     if (!this.newUser.password) {
-      this.mostrarAlerta("Información invalida", "Ingrese una  contraseña .");
+      this.showAlert("Información invalida", "Ingrese una  contraseña .");
       return false;
     }
     if (this.passwordConfirmation !== this.newUser.password) {
-      this.mostrarAlerta("Información invalida", "La contraseña y su confirmación no coinciden.");
+      this.showAlert("Información invalida", "La contraseña y su confirmación no coinciden.");
       return false;
     }
     return true;

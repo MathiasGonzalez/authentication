@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar hideBackButton="true">
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <ion-title *ngIf="!showSeacrhBar" text-center> Grupos </ion-title>
+    <ion-searchbar *ngIf="showSeacrhBar" [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)"
+      (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="searchBarShow()"><ion-icon name="{{!showSeacrhBar?'search':'close'}}"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content class="dashboard-content">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-md-3 col-0>
+        <ion-buttons start>
+          <button ion-button icon-only (click)="addGroup()"><ion-icon name="add"></ion-icon></button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col col-md-6 col-12>
+        <ion-searchbar [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+        </ion-searchbar>
+      </ion-col>
+      <ion-col col-md-3 col-0></ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col *ngFor="let group of groups" col-lg-4 col-md-6 col-12>
+        <ion-card class="borde-sup-azul">
+          <ion-item>
+            <h2>Editar </h2>
+          </ion-item>
+          <ion-card-content>
+
+          </ion-card-content>
+          <ion-item>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

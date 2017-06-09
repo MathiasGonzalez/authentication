@@ -39,6 +39,7 @@ import { ConfigPageModule } from "../pages/config/config.module";
 import { AboutPageModule } from "../pages/about/about.module";
 import { AccountConfigPageModule } from "../pages/account-config/account-config.module";
 import { NewSnippetPageModule } from "../pages/new-snippet/new-snippet.module";
+import { GroupsPageModule } from "../pages/groups/groups.module";
 
 
 // Initialize Firebase
@@ -80,7 +81,8 @@ export const firebaseConfig = {
     ConfigPageModule,
     AboutPageModule,
     AccountConfigPageModule,
-    NewSnippetPageModule
+    NewSnippetPageModule,
+    GroupsPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
