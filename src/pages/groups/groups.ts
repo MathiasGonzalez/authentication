@@ -23,7 +23,7 @@ export class GroupsPage extends PrivatePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GroupsPage');
+
   }
 
 }

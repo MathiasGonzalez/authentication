@@ -10,6 +10,8 @@ import { UserLogin } from "../user-login/user-login";
 import { AddSnippetIn, Snippet, FirstSnippetsIn, FirstSnippetsOut, Field, AddSnippetOut } from "../../generated/proxy";
 import { AppModule } from "../../app/app.module";
 
+import clone from "clone"
+
 /**
  * Generated class for the Dashboard page.
  *
@@ -123,8 +125,8 @@ export class Dashboard extends PrivatePage {
   }
 
   protected editSnippet(snippet: Snippet) {
-    let snp = [snippet].slice();
-    let profileModal = this.modalController.create(NewSnippetPage, snp[0]);
+    let snp = clone(snippet);
+    let profileModal = this.modalController.create(NewSnippetPage, snp);
     profileModal.onDidDismiss(this.processEditSnippet.bind(this));
     profileModal.present();
   }

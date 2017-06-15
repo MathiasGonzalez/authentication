@@ -46,11 +46,9 @@ export class MyApp {
     //firebase detecto una session viva authorization.currentUser esta seteado
     authorization.success.subscribe(((user: firebase.User) => {
       if (this.currentUser == null && !!user) {
-        this.login(user);
-        console.log("login ")
+        this.login(user);     
       }
-      this.currentUser = user;
-      console.log("USER:>", this.currentUser);
+      this.currentUser = user;   
     }).bind(this), ((error: any) => {
       this.logOut();
     }).bind(this));

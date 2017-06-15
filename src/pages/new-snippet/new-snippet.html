@@ -20,7 +20,7 @@
   <ion-title *ngIf="!!currentSnippet?.fields || currentSnippet?.fields?.length===0">sdf</ion-title>
   <ion-card class="borde-sup-rojo" *ngIf="currentSnippet">
     <ion-item>
-      <h2>{{ currentSnippet?.fecha }}</h2>
+      <h1>{{ newField ? 'Nuevo Snippet' : 'Snippet' }}</h1>
     </ion-item>
     <ion-card-content>
       <ion-list *ngIf="!newField">
@@ -49,7 +49,8 @@
           </ion-item>
         </div>-->
       </ion-list>
-      <ion-list *ngIf="newField">
+     
+      <ion-list *ngIf="newField">        
         <div class="new-field-container" >
           <ion-item>
             <ion-label stacked> Valor 1 </ion-label>
@@ -90,7 +91,7 @@
 
       <button icon-right ion-button (click)="addFields()">{{newField ? 'Agregar campo' : 'Nuevo campo'}}<ion-icon *ngIf="!newField" name="add"></ion-icon></button>
       <button *ngIf="newField" icon-right ion-button (click)="cleanNewField()">{{'Limpiar'}}<ion-icon *ngIf="!newField" name="clean"></ion-icon></button>
-      <button *ngIf="newField" ion-button icon-only (click)="cancelNewField()"><ion-icon name="remove-circle"></ion-icon></button>
+      <button *ngIf="newField" ion-button  (click)="cancelNewField()">{{'Cancelar'}}<ion-icon name="remove-circle"></ion-icon></button>
 
     </ion-buttons>
     <!--<button ion-fab icon-only mini (click)="addFields()"><ion-icon name="add"></ion-icon></button>

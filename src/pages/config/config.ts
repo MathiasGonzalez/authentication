@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SampleModalPage } from "../sample-modal/sample-modal";
 import { AccountConfigPage } from "../account-config/account-config";
 import { AboutPage } from "../about/about";
+import { PrivatePage } from "../privatePage";
 
 /**
  * Generated class for the ConfigPage page.
@@ -15,7 +16,7 @@ import { AboutPage } from "../about/about";
   selector: 'page-config',
   templateUrl: 'config.html',
 })
-export class ConfigPage {
+export class ConfigPage extends PrivatePage {
 
   tab1Root = AccountConfigPage;
 
@@ -24,10 +25,8 @@ export class ConfigPage {
   tab3Root = SampleModalPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    super(navCtrl, navParams)
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ConfigPage');
-  }
+  
 
 }

@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { Field, Snippet, AddSnippetIn, AddSnippetOut } from "../../generated/proxy";
 import { PrivatePage } from "../privatePage";
 import { AppModule } from "../../app/app.module";
-
+import clone from "clone"
 /**
  * Generated class for the NewSnippetPage page.
  *
@@ -19,7 +19,7 @@ export class NewSnippetPage extends PrivatePage {
 
   protected currentSnippet: Snippet;
   protected newField: Field;
-
+ 
   protected _isEditing = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
@@ -28,7 +28,7 @@ export class NewSnippetPage extends PrivatePage {
     this.currentSnippet = this._isEditing ? navParams.data : new Snippet();
     if (!this.currentSnippet.fields) {
       this.currentSnippet.fields = [];
-    }
+    }    
   }
   valor1Blured() {
     console.log("blured")

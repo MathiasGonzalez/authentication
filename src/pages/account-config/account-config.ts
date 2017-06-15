@@ -14,11 +14,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AccountConfigPage {
 
+  public autoSync: boolean = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AccountConfigPage');
+  ionViewDidLoad() { 
   }
 
 }
