@@ -1,6 +1,6 @@
 import { NewSnippetPage } from '../new-snippet/new-snippet';
 import { PrivatePage } from '../privatePage';
-import { Component } from '@angular/core';
+import { Component, ViewChildren } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { DetalleItemPage } from "../detalle-item/detalle-item";
 import { MainItem } from "../../entities/mainItem";
@@ -26,6 +26,8 @@ import clone from "clone"
 export class Dashboard extends PrivatePage {
 
   myInput; string;
+
+  // @ViewChildren() textAreas:any;
 
   protected showSeacrhBar = false;
 
@@ -138,6 +140,17 @@ export class Dashboard extends PrivatePage {
       if (indx >= 0) {
         this.data[indx] = editedSnippet;
       }
+    }
+  }
+
+  protected copySnippet(fieldId: number): void {
+    try {
+      var selection = document.getElementById(`field_${fieldId.toString()}`);
+      (<any>selection.children.item(0)).select()
+      document.execCommand('copy');
+    }
+    catch (v) {
+      this.showAlert("error", v);
     }
   }
 

@@ -35,17 +35,24 @@
     <ion-row>
       <ion-col *ngFor="let item of data" col-lg-4 col-md-6 col-12>
         <ion-card class="borde-sup-rojo">
-          <ion-item>
-            <h2 (click)="editSnippet(item)">Editar {{ item?.fecha }}</h2>
-          </ion-item>
+
           <ion-card-content>
             <ion-list>
-              <ion-item *ngFor="let item of item.fields">
-                <ion-label stacked> {{item?.name}}</ion-label>
-                <ion-textarea type="text" [readonly]="true" value="{{item?.value}}"></ion-textarea>
-              </ion-item>
+              <div *ngFor="let field of item.fields;let idx = index">
+                <ion-item >
+                  <ion-label stacked> {{field?.name}}</ion-label>
+                  <ion-textarea id="field_{{field?.id}}" type="text" [readonly]="true" value="{{field?.value}}"></ion-textarea>                 
+                </ion-item>
+                 <ion-item >                 
+                  <button ion-button (click)="copySnippet(field?.id)">Copiar contenido</button>
+                </ion-item>
+              </div>
             </ion-list>
           </ion-card-content>
+          <ion-item>
+            <!--<button ion-button item-right (click)="copySnippet(item)">Copiar contenido</button>-->
+            <button ion-button item-right (click)="editSnippet(item)">Editar {{ item?.fecha }}</button>
+          </ion-item>
           <ion-item>
             <button *ngFor="let tag of item.tags" ion-button item-right (click)="mostrarModalConfirmacion(item)">{{ tag }}</button>
           </ion-item>

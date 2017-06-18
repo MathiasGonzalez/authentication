@@ -59,7 +59,7 @@
         "ionic-plugin-keyboard"
     ],
     "cordovaPlatforms": [],
-    "description": "authentication: An Ionic project",
+    "description": "ambientes",
     "cordova": {
         "platforms": [
             "android",

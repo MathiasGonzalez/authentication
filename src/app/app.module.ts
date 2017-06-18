@@ -10,7 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler, Injector, EventEmitter } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler, NavController } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 
 import { UserLogin } from '../pages/user-login/user-login';
 import { UserSignup } from '../pages/user-signup/user-signup';
@@ -40,6 +40,7 @@ import { AboutPageModule } from "../pages/about/about.module";
 import { AccountConfigPageModule } from "../pages/account-config/account-config.module";
 import { NewSnippetPageModule } from "../pages/new-snippet/new-snippet.module";
 import { GroupsPageModule } from "../pages/groups/groups.module";
+import { httpFactory } from "../interceptors/httpFactory";
 
 
 // Initialize Firebase
@@ -98,6 +99,11 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    {
+      provide: Http,
+      useFactory: httpFactory,
+      deps: [XHRBackend, RequestOptions]
+    },
     AngularFireAuth,
     AngularFireDatabase,
     Authorization,
