@@ -18,7 +18,9 @@ export class Authorization {
   gToken: any;
 
   constructor(public afAuth: AngularFireAuth) {
+    
     this.authState = afAuth.authState;
+
     afAuth.authState.subscribe((user: firebase.User) => {
       this.currentUser = user;
       this.success.emit(user)
